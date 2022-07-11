@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Reise
+Trips=Reisen
+TripsAndExpenses=Reise- und Fahrtspesen
+TripsAndExpensesStatistics=Reise- und Spesenstatistiken
+TripCard=Reise-Karte
+AddTrip=Reise hinzufügen
+ListOfTrips=Liste der Reisen
+ListOfFees=Liste der Spesen
+NewTrip=Neue Reise
+CompanyVisited=Besuchter Partner
+Kilometers=Kilometerstand
+FeesKilometersOrAmout=Kilometergeld oder Spesenbetrag
+DeleteTrip=Reise löschen
+ConfirmDeleteTrip=Möchten Sie diese Reise wirklich löschen?
+TF_OTHER=Andere
+TF_LUNCH=Essen
+TF_TRIP=Reise
+ListTripsAndExpenses=Liste der Reisen und Spesen
+ExpensesArea=Spesenübersicht
+SearchATripAndExpense=Suchen nach einer Reise oder Aufwänden

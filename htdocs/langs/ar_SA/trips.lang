@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=رحلة
+Trips=رحلات
+TripsAndExpenses=ونفقات الرحلات
+TripsAndExpensesStatistics=رحلات ونفقات إحصاءات
+TripCard=بطاقة زيارة
+AddTrip=إضافة رحلة
+ListOfTrips=قائمة الرحلات
+ListOfFees=قائمة الرسوم
+NewTrip=رحلة جديدة
+CompanyVisited=الشركة / المؤسسة زارت
+Kilometers=كم
+FeesKilometersOrAmout=كم المبلغ أو
+DeleteTrip=رحلة حذف
+ConfirmDeleteTrip=هل أنت متأكد من أنك تريد حذف هذه الرحلة؟
+TF_OTHER=أخرى
+TF_LUNCH=غداء
+TF_TRIP=رحلة
+ListTripsAndExpenses=قائمة الرحلات والمصاريف
+ExpensesArea=رحلات ومنطقة النفقات
+SearchATripAndExpense=بحث عن رحلة والنفقات

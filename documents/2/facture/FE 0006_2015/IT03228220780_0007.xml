@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://www.fatturapa.gov.it/sdi/fatturapa/v1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" versione="1.1">
+  <FatturaElettronicaHeader>
+    <DatiTrasmissione>
+      <IdTrasmittente>
+        <IdPaese>IT</IdPaese>
+        <IdCodice>03228220780</IdCodice>
+      </IdTrasmittente>
+      <ProgressivoInvio>7</ProgressivoInvio>
+      <FormatoTrasmissione>SDI11</FormatoTrasmissione>
+      <CodiceDestinatario>KJBNQY</CodiceDestinatario>
+      <ContattiTrasmittente>
+        <Telefono>06 51530023</Telefono>
+        <Email>amministrazione@ntaglobal.org</Email>
+      </ContattiTrasmittente>
+    </DatiTrasmissione>
+    <CedentePrestatore>
+      <DatiAnagrafici>
+        <IdFiscaleIVA>
+          <IdPaese>IT</IdPaese>
+          <IdCodice>03228220780</IdCodice>
+        </IdFiscaleIVA>
+        <CodiceFiscale>03228220780</CodiceFiscale>
+        <Anagrafica>
+          <Denominazione>NTA GLOBAL SRL</Denominazione>
+        </Anagrafica>
+        <RegimeFiscale>RF01</RegimeFiscale>
+      </DatiAnagrafici>
+      <Sede>
+        <Indirizzo>Via A. De Gasperi n. 9</Indirizzo>
+        <CAP>87018</CAP>
+        <Comune>San Marco Argentano</Comune>
+        <Provincia>CS</Provincia>
+        <Nazione>IT</Nazione>
+      </Sede>
+    </CedentePrestatore>
+    <CessionarioCommittente>
+      <DatiAnagrafici>
+        <CodiceFiscale>80111810588</CodiceFiscale>
+        <Anagrafica>
+          <Denominazione>ISTAT - ISTITUTO NAZIONALE DI STATISTICA</Denominazione>
+        </Anagrafica>
+      </DatiAnagrafici>
+      <Sede>
+        <Indirizzo>Via Cesare Balbo n. 16</Indirizzo>
+        <CAP>00184</CAP>
+        <Comune>ROMA</Comune>
+        <Provincia>RM</Provincia>
+        <Nazione>IT</Nazione>
+      </Sede>
+    </CessionarioCommittente>
+  </FatturaElettronicaHeader>
+  <FatturaElettronicaBody>
+    <DatiGenerali>
+      <DatiGeneraliDocumento>
+        <TipoDocumento>TD01</TipoDocumento>
+        <Divisa>EUR</Divisa>
+        <Data>2015-07-27</Data>
+        <Numero>FE 0006/2015</Numero>
+        <ImportoTotaleDocumento>841.80</ImportoTotaleDocumento>
+        <Causale>Num. Ordine: 319 del 22/07/15
+C.I.G: Z2015829B4
+Oggetto: Fornitura</Causale>
+        <Art73>SI</Art73>
+      </DatiGeneraliDocumento>
+      <DatiOrdineAcquisto>
+        <RiferimentoNumeroLinea>1</RiferimentoNumeroLinea>
+        <IdDocumento>319</IdDocumento>
+        <Data>2015-07-22</Data>
+        <CodiceCIG>Z2015829B4</CodiceCIG>
+      </DatiOrdineAcquisto>
+    </DatiGenerali>
+    <DatiBeniServizi>
+      <DettaglioLinee>
+        <NumeroLinea>1</NumeroLinea>
+        <Descrizione>Toner per stampante Brother</Descrizione>
+        <Quantita>6.00</Quantita>
+        <PrezzoUnitario>115.00</PrezzoUnitario>
+        <PrezzoTotale>690.00</PrezzoTotale>
+        <AliquotaIVA>22.00</AliquotaIVA>
+      </DettaglioLinee>
+      <DatiRiepilogo>
+        <AliquotaIVA>22.00</AliquotaIVA>
+        <ImponibileImporto>690.00</ImponibileImporto>
+        <Imposta>151.80</Imposta>
+        <EsigibilitaIVA>I</EsigibilitaIVA>
+      </DatiRiepilogo>
+    </DatiBeniServizi>
+    <DatiPagamento>
+      <CondizioniPagamento>TP02</CondizioniPagamento>
+      <DettaglioPagamento>
+        <ModalitaPagamento>MP05</ModalitaPagamento>
+        <DataScadenzaPagamento>2015-07-27</DataScadenzaPagamento>
+        <ImportoPagamento>841.80</ImportoPagamento>
+        <IBAN>IT84U0313980730000000015379</IBAN>
+      </DettaglioPagamento>
+    </DatiPagamento>
+  </FatturaElettronicaBody>
+</p:FatturaElettronica>

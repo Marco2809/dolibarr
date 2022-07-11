@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Gezi
+Trips=Geziler
+TripsAndExpenses=Geziler ve giderler
+TripsAndExpensesStatistics=Gezi ve gider istatistikleri
+TripCard=Gezi kartı
+AddTrip=Gezi ekle
+ListOfTrips=Gezi listesi
+ListOfFees=Ücretler listesi
+NewTrip=Yeni gezi
+CompanyVisited=Ziyaret edilen firma/kuruluş
+Kilometers=Kilometre
+FeesKilometersOrAmout=Tutar ya da kilometre
+DeleteTrip=Gezi sil
+ConfirmDeleteTrip=Bu geziyi silmek istediğinizden emin misiniz?
+TF_OTHER=Diğer
+TF_LUNCH=Öğle yemeği
+TF_TRIP=Gezi
+ListTripsAndExpenses=Geziler ve giderler listesi
+ExpensesArea=Geziler ve giderler alanı
+SearchATripAndExpense=Bir gezi ve gider ara

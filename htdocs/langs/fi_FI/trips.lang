@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Matka
+Trips=Retket
+TripsAndExpenses=Matkat ja kulut
+TripsAndExpensesStatistics=Retket ja kulut tilastot
+TripCard=Trip-kortti
+AddTrip=Lisää matka
+ListOfTrips=Luettelo matkat
+ListOfFees=Luettelo palkkiot
+NewTrip=Uusi matka
+CompanyVisited=Yritys / säätiö vieraili
+Kilometers=Kilometers
+FeesKilometersOrAmout=Määrä tai kilometreinä
+DeleteTrip=Poista matka
+ConfirmDeleteTrip=Oletko varma, että haluat poistaa tämän matkan?
+TF_OTHER=Muu
+TF_LUNCH=Lounas
+TF_TRIP=Matka
+ListTripsAndExpenses=Luettelo matkat ja kulut
+ExpensesArea=Retket ja kulut alue
+SearchATripAndExpense=Etsi matka-ja kulut

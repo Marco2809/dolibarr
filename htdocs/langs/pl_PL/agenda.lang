@@ -1,0 +1,86 @@
+# Dolibarr language file - Source file is en_US - agenda
+IdAgenda=ID zdarzenia
+Actions=Działania
+ActionsArea=Obszar działań (Zdarzenia i zadania)
+Agenda= Agenda
+Agendas= Agendy
+Calendar= Kalendarz
+Calendars= Kalendarze
+LocalAgenda=Kalendarz lokalny
+AffectedTo= Przypisany do
+DoneBy= Wykonane przez
+Events= Zdarzenia
+EventsNb=Ilość zdarzeń
+MyEvents=Moje zdarzenia
+OtherEvents=Inne zdarzenia
+ListOfActions=Lista zdarzeń
+Location=Lokalizacja
+EventOnFullDay=Zdarzenie całodniowe
+SearchAnAction= Szukaj zdarzenia/zadania
+MenuToDoActions= Wszystkie zdarzenia niekompletne
+MenuDoneActions= Wszystkie zdarzenia zakończone
+MenuToDoMyActions= Moje działania niekompletne
+MenuDoneMyActions= Moje zdarzenia zakończone
+ListOfEvents= Lista zdarzeń Dolibarr
+ActionsAskedBy=Akcje zostały zarejestrowane przez
+ActionsToDoBy=Zdarzenia przypisane do
+ActionsDoneBy=Zdarzenia wykonane przez
+ActionsForUser=Events for user
+ActionsForUsersGroup=Events for all users of group
+AllMyActions= Wszystkie moje zdarzenia/zadania
+AllActions= Wszystkie zdarzenia/zadania
+ViewList=Widok listy
+ViewCal=Pokaż miesiąc
+ViewDay=Pokaż dzień
+ViewWeek=Pokaż tydzień
+ViewPerUser=Per user
+ViewWithPredefinedFilters= Widok ze zdefiniowanymi filtrami
+AutoActions= Automatyczne wypełnianie
+AgendaAutoActionDesc= Określ zdarzenia, dla których Dolibarr ma tworzyć automatycznie wpisy w agendzie. Jeżeli nie jest zaznaczone (domyślnie), w agendzie zostaną utworzone wpisy wyłącznie dla działań manualnych.
+AgendaSetupOtherDesc= Ta strona zawiera opcje, pozwalające eksportować Twoje zdarzenia Dolibarr do zewnętrznego kalendarza (Thunderbird, Google Calendar, ...)
+AgendaExtSitesDesc=Ta strona pozwala zdefiniować zewnętrzne źródła kalendarzy, aby zobaczyć uwzględnić zapisane tam zdarzenia w agendzie Dolibarr.
+ActionsEvents= Zdarzenia, dla których Dolibarr stworzy automatycznie zadania w agendzie
+PropalValidatedInDolibarr= Zatwierdzenie oferty %s
+InvoiceValidatedInDolibarr= Zatwierdzenie faktury %s
+InvoiceBackToDraftInDolibarr=Zmiana statusu faktura %s na draft
+InvoiceDeleteDolibarr=Usunięcie faktury %s
+OrderValidatedInDolibarr= Zatwierdzenie zamówienia %s
+OrderApprovedInDolibarr=Akceptacja zamówienia %s
+OrderRefusedInDolibarr=Order %s refused
+OrderBackToDraftInDolibarr=Zmiana statusu zamówienia %s na draft
+OrderCanceledInDolibarr=Anulowanie zamówienia %s
+InterventionValidatedInDolibarr=Zatwierdzenie Interwencji %s
+ProposalSentByEMail=Oferta %s wysłana e-mailem
+OrderSentByEMail=Zamówienie %s Klienta wysłane e-mailem
+InvoiceSentByEMail=Faktura %s wysłana e-mailem
+SupplierOrderSentByEMail=Zamówienie %s wysłane do dostawcy e-mailem
+SupplierInvoiceSentByEMail=Faktura %s wysłana do dostawcy e-mailem
+ShippingSentByEMail=Informacje o dostawie %s wysłane e-mailem
+ShippingValidated= Shipping %s validated
+InterventionSentByEMail=%s interwencyjne wysłane pocztą
+InterventionClassifiedBilled=Intervention %s classified as Billed
+NewCompanyToDolibarr= Stworzono kontrahenta
+DateActionPlannedStart= Planowana data rozpoczęcia
+DateActionPlannedEnd= Planowana data zakończenia
+DateActionDoneStart= Rzeczywista data rozpoczęcia
+DateActionDoneEnd= Rzeczywista data zakończenia
+DateActionStart= Data rozpoczęcia
+DateActionEnd= Data zakończenia
+AgendaUrlOptions1=Możesz także dodać następujące parametry do filtr wyjściowy:
+AgendaUrlOptions2=<b>login= %s,</b> aby ograniczyć wyjście do działań stworzonych lub przypisanych do <b>użytkownika %s.</b>
+AgendaUrlOptions3=<b>logina=<b>logina= %s,</b> aby ograniczyć wyjście do działań stworzonych przez użytkownika <b %s.</b>
+AgendaUrlOptions4=<b>logint=%s,</b> aby ograniczyć wyjścia do działań przypisanych do użytkownika <b>%s.</b>
+AgendaUrlOptions5=<b>logind=%s,</b> aby ograniczyć wyjście do działań wykonanych przez użytkownika <b>%s.</b>
+AgendaShowBirthdayEvents=Pokaż urodziny kontaktów
+AgendaHideBirthdayEvents=Ukryj urodzin kontaktów
+Busy=Zajęty
+ExportDataset_event1=Lista zdarzeń w agendzie
+
+# External Sites ical
+ExportCal=Eksport kalendarza
+ExtSites=Import zewnętrznych kalendarzy
+ExtSitesEnableThisTool=Pokaż zewnętrzne kalendarze w agendzie
+ExtSitesNbOfAgenda=Ilość kalendarzy
+AgendaExtNb=Kalendarz nb %s
+ExtSiteUrlAgenda=URL dostępu. Plik iCal
+ExtSiteNoLabel=Brak opisu

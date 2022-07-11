@@ -1,0 +1,76 @@
+# Dolibarr language file - Source file is en_US - sendings
+RefSending=المرجع. إرسال
+Sending=إرسال
+Sendings=الإرسال
+Shipment=إرسال
+Shipments=شحنات
+Receivings=Receivings
+SendingsArea=منطقة الإرسال
+ListOfSendings=قائمة الإرسال
+SendingMethod=طريقة إرسال
+SendingReceipt=ارسال ورود
+LastSendings=ق الماضي ٪ الإرسال
+SearchASending=البحث المرسلة
+StatisticsOfSendings=إحصاءات الإرسال
+NbOfSendings=عدد الإرسال
+# NumberOfShipmentsByMonth=Number of shipments by month
+SendingCard=إرسال بطاقة
+NewSending=ارسال جديدة
+CreateASending=خلق إرسال
+CreateSending=خلق إرسال
+QtyOrdered=الكمية أمرت
+QtyShipped=الكمية المشحونة
+QtyToShip=لشحن الكمية
+QtyReceived=الكمية الواردة
+KeepToShip=إبقاء لشحن
+OtherSendingsForSameOrder=الإرسال الأخرى لهذا النظام
+DateSending=وحتى الآن من أجل إرسال
+DateSendingShort=وحتى الآن من أجل إرسال
+SendingsForSameOrder=الإرسال لهذا النظام
+SendingsAndReceivingForSameOrder=الإرسال وreceivings لهذا النظام
+SendingsToValidate=للمصادقة على إرسال
+StatusSendingCanceled=ألغيت
+StatusSendingDraft=مسودة
+StatusSendingValidated=صادق (لشحن المنتجات أو شحنها بالفعل)
+StatusSendingProcessed=معالجة
+StatusSendingCanceledShort=ألغيت
+StatusSendingDraftShort=مسودة
+StatusSendingValidatedShort=صادق
+StatusSendingProcessedShort=معالجة
+SendingSheet=إرسال ورقة
+Carriers=شركات الطيران
+Carrier=الناقل
+CarriersArea=ناقلات المنطقة
+NewCarrier=الناقل الجديد
+ConfirmDeleteSending=هل أنت متأكد من أنك تريد حذف هذا المرسلة؟
+ConfirmValidateSending=هل أنت متأكد من أنك تريد إرسال valdate هذا؟
+ConfirmCancelSending=هل أنت متأكد من أنك تريد إلغاء إرسال هذا؟
+GenericTransport=النقل العام
+Enlevement=حصلت من قبل العميل
+DocumentModelSimple=وثيقة نموذج بسيط
+DocumentModelMerou=Mérou A5 نموذج
+WarningNoQtyLeftToSend=تحذير ، لا تنتظر أن المنتجات المشحونة.
+# StatsOnShipmentsOnlyValidated=Statistics conducted on shipments only validated. Date used is date of validation of shipment (planed delivery date is not always known).
+DateDeliveryPlanned=مسطح تاريخ التسليم
+DateReceived=تلقى تاريخ التسليم
+SendShippingByEMail=ارسال شحنة عن طريق البريد الالكتروني
+SendShippingRef=ارسال شحنة %s
+ActionsOnShipping=الأحداث على شحنة
+LinkToTrackYourPackage=رابط لتتبع الحزمة الخاصة بك
+ShipmentCreationIsDoneFromOrder=لحظة، ويتم إنشاء لشحنة جديدة من أجل بطاقة.
+# RelatedShippings=Related shippings
+# ShipmentLine=Shipment line
+# CarrierList=List of transporters
+
+# Sending methods
+SendingMethodCATCH=القبض على العملاء
+SendingMethodTRANS=نقل
+SendingMethodCOLSUI=Colissimo
+
+# ModelDocument
+DocumentModelSirocco=نموذج بسيط لتسليم وثيقة من وثائق وإيصالات
+DocumentModelTyphon=أكمل نموذج لتسليم وثيقة من وثائق الإيصالات (logo...)
+
+Error_EXPEDITION_ADDON_NUMBER_NotDefined=EXPEDITION_ADDON_NUMBER ثابت لم تحدد
+# SumOfProductVolumes=Sum of product volumes
+# SumOfProductWeights=Sum of product weights

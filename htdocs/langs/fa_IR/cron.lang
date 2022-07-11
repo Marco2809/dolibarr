@@ -1,0 +1,87 @@
+# Dolibarr language file - Source file is en_US - cron
+# About page
+About = در حدود
+CronAbout = درباره cron را
+CronAboutPage = cron را در مورد صفحه
+# Right
+Permission23101 = به نشانه خوانده شدن برنامه ریزی شده کار
+Permission23102 = ایجاد / بروز رسانی برنامه ریزی شده کار
+Permission23103 = حذف کار برنامه ریزی شده
+Permission23104 = اجرای کار برنامه ریزی شده
+# Admin
+CronSetup= برنامه ریزی راه اندازی مدیریت کار
+URLToLaunchCronJobs=URL برای بررسی و راه اندازی کارهای cron در صورت لزوم
+OrToLaunchASpecificJob=و یا برای بررسی و راه اندازی یک کار خاص
+KeyForCronAccess=کلید امنیتی برای URL برای راه اندازی کارهای cron
+FileToLaunchCronJobs=خط فرمان برای راه اندازی کارهای cron
+CronExplainHowToRunUnix=در محیط یونیکس شما باید crontab کاربر برای اجرای خط فرمان در هر دقیقه استفاده
+CronExplainHowToRunWin=در مایکروسافت، محصول محیط ویندوز شما می توانید ابزار کار برنامه ریزی شده برای اجرای خط فرمان در هر دقیقه استفاده
+# Menu
+CronJobs=شغل برنامه ریزی
+CronListActive= لیست شغل ها فعال
+CronListInactive= لیست شغل ها غیر فعال
+CronListActive= لیست شغل ها فعال
+# Page list
+CronDateLastRun=تاریخ و زمان آخرین اجرا
+CronLastOutput=تاریخ و زمان آخرین خروجی اجرا
+CronLastResult=آخرین نتیجه
+CronListOfCronJobs=لیست شغل ها برنامه ریزی شده
+CronCommand=فرمان
+CronList=فهرست مشاغل
+CronDelete= حذف کارهای cron
+CronConfirmDelete= آیا مطمئن هستید که می خواهید این برنامه cron را حذف کنید؟
+CronExecute=کار راه اندازی
+CronConfirmExecute= آیا مطمئن به اجرای این کار در حال حاضر
+CronInfo= شغل اجازه می دهد برای اجرای وظیفه ای که برنامه ریزی شده است
+CronWaitingJobs=شغل Wainting
+CronTask=کار
+CronNone= هیچ یک
+CronDtStart=تاریخ شروع
+CronDtEnd=تاریخ پایان
+CronDtNextLaunch=اعدام بعدی
+CronDtLastLaunch=تاریخ و زمان آخرین اعدام
+CronFrequency=Frequancy
+CronClass=CLASSE
+CronMethod=روش
+CronModule=واحد
+CronAction=عمل
+CronStatus=وضعیت
+CronStatusActive=فعال بودن
+CronStatusInactive=غیر فعال
+CronNoJobs=بدون شغل ثبت نام
+CronPriority=اولویت
+CronLabel=توصیف
+CronNbRun=نیوبیوم. راه اندازی
+CronEach=هر
+JobFinished=کار راه اندازی به پایان رسید و
+#Page card
+CronAdd= اضافه کردن شغل
+CronHourStart= شروع ساعت و تاریخ کار
+CronEvery= و وظیفه هر یک از اجرا
+CronObject= به عنوان مثال / شی برای ایجاد
+CronArgs=پارامترها
+CronSaveSucess=صرفه جویی در موفقیت
+CronNote=توضیح
+CronFieldMandatory=زمینه های از%s الزامی است
+CronErrEndDateStartDt=تاریخ پایان نمی تواند قبل از تاریخ شروع می شود
+CronStatusActiveBtn=قادر ساختن
+CronStatusInactiveBtn=از کار انداختن
+CronTaskInactive=این کار غیر فعال است
+CronDtLastResult=آخرین تاریخ نتیجه
+CronId=شناسایی
+CronClassFile=کلاس ها (filename.class.php)
+CronModuleHelp=نام Dolibarr دایرکتوری ماژول (با ماژول Dolibarr خارجی کار می کنند). <BR> برای exemple به بهانه روش Dolibarr شی محصولات / htdocs / <u>محصول</u> / کلاس / product.class.php، ارزش ماژول <i>محصول</i>
+CronClassFileHelp=نام فایل برای بارگذاری. <BR> برای exemple به بهانه روش Dolibarr محصولات شی / htdocs / محصول / کلاس / <u>product.class.php،</u> ارزش نام فایل کلاس <i>product.class.php</i> است
+CronObjectHelp=نام شی برای بارگذاری. <BR> برای exemple به بهانه روش Dolibarr شی محصولات / htdocs / محصول / کلاس / product.class.php، ارزش نام فایل کلاس <i>محصولات</i> است
+CronMethodHelp=روش شی برای راه اندازی. <BR> برای exemple به بهانه روش Dolibarr محصولات شی / htdocs / محصول / کلاس / product.class.php، ارزش روش است <i>fecth</i>
+CronArgsHelp=استدلال از روش. <BR> برای exemple به بهانه روش Dolibarr محصولات شی / htdocs / محصول / کلاس / product.class.php، مقدار پارامترهای می تواند <i>0، ProductRef</i>
+CronCommandHelp=خط فرمان سیستم را اجرا کند.
+# Info
+CronInfoPage=اطلاعات
+# Common
+CronType=نوع کار
+CronType_method=روش تماس از یک کلاس Dolibarr
+CronType_command=فرمان شل
+CronMenu=cron را
+CronCannotLoadClass=آیا می توانم کلاس%s ​​را بار نیست و یا شی از%s
+UseMenuModuleToolsToAddCronJobs=برو به منوی "صفحه اصلی - ماژول ابزار - فهرست فرصت های شغلی" برای دیدن و ویرایش کار برنامه ریزی شده.

@@ -1,0 +1,11 @@
+Dolibarr language file - es_PU - main
+DIRECTION=ltr
+SeparatorDecimal=,
+SeparatorThousand=None
+AmountVAT=Importe IGV
+TotalVAT=Total IGV
+IncludedVAT=IGV incluido
+HT=Sin IGV
+TTC=IGV incluido
+VAT=IGV
+VATRate=Tasa IGV

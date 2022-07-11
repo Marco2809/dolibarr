@@ -1,0 +1,76 @@
+# Dolibarr language file - Source file is en_US - sendings
+RefSending=Saadetise viide
+Sending=Saadetis
+Sendings=Saadetised
+Shipment=Saadetis
+Shipments=Saadetised
+Receivings=Saabumised
+SendingsArea=Saadetiste ala
+ListOfSendings=Saadetiste nimekiri
+SendingMethod=Saatmisviis
+SendingReceipt=Saatmise kinnitus
+LastSendings=Viimased %s saadetist
+SearchASending=Otsi saadetist
+StatisticsOfSendings=Saadetiste statistika
+NbOfSendings=Saadetiste arv
+NumberOfShipmentsByMonth=Saadetiste arv kuude järgi
+SendingCard=Saadetise kaart
+NewSending=Uus saadetis
+CreateASending=Koosta saadetis
+CreateSending=Koosta saadetis
+QtyOrdered=Tellitud kogus
+QtyShipped=Saadetud kogus
+QtyToShip=Kogus saata
+QtyReceived=Saabunud kogus
+KeepToShip=Jätkuvalt saata
+OtherSendingsForSameOrder=Tellimusega seotud teised saadetised
+DateSending=Tellimuse saatmise kuupäev
+DateSendingShort=Tellimuse saatmise kuupäev
+SendingsForSameOrder=Tellimusega seotud saadetised
+SendingsAndReceivingForSameOrder=Tellimusega seotud saadetised ja saabumised
+SendingsToValidate=Kinnitamast vajavad saadetised
+StatusSendingCanceled=Tühistatud
+StatusSendingDraft=Mustand
+StatusSendingValidated=Kinnitatud (väljastamisele minevad või juba väljastatud kaubad)
+StatusSendingProcessed=Töödeldud
+StatusSendingCanceledShort=Tühistatud
+StatusSendingDraftShort=Mustand
+StatusSendingValidatedShort=Kinnitatud
+StatusSendingProcessedShort=Töödeldud
+SendingSheet=Saateleht
+Carriers=Vedajad
+Carrier=Vedaja
+CarriersArea=Vedajate ala
+NewCarrier=Uus vedaja
+ConfirmDeleteSending=Kas soovid kindlasti selle saadetise kustutada?
+ConfirmValidateSending=Kas soovid kindlasti selle saadetise kinnitada viitega <b>%s</b> ?
+ConfirmCancelSending=Kas soovid kindlasti selle saadetise tühistada?
+GenericTransport=Üldine transdpor
+Enlevement=Klient tuleb järele
+DocumentModelSimple=Lihtsa dokumendi mudel
+DocumentModelMerou=Merou A5 mudel
+WarningNoQtyLeftToSend=Hoiatus: pole ühtki lähetamise ootel kaupa.
+StatsOnShipmentsOnlyValidated=Statistika põhineb vaid kinnitatud saadetistel. Kasutatavaks kuupäevaks on saadetise kinnitamise kuupäev (plaanitav kohaletoimetamise aeg ei ole alati teada).
+DateDeliveryPlanned=Plaanitud kohaletoimetamise aeg
+DateReceived=Saadetise kättesaamise kuupäev
+SendShippingByEMail=Saada saadetis e-postiga
+SendShippingRef=Läheta saadetis %s
+ActionsOnShipping=Saatmisel toimuvad tegevused
+LinkToTrackYourPackage=Paki jälgimise link
+ShipmentCreationIsDoneFromOrder=Praegu luuakse saadetised tellimuse kaardilt.
+RelatedShippings=Seotud saatmised
+ShipmentLine=Saadetise rida
+CarrierList=Vedajate nimekiri
+
+# Sending methods
+SendingMethodCATCH=Kliendi saak
+SendingMethodTRANS=Transportija
+SendingMethodCOLSUI=Colissimo
+
+# ModelDocument
+DocumentModelSirocco=Lihtne saatelehtede dokumendi mudel
+DocumentModelTyphon=Täiuslikum saatelehtede dokumendi mudel (logo jne)
+
+Error_EXPEDITION_ADDON_NUMBER_NotDefined=Konstant EXPEDITION_ADDON_NUMBER on määratlemata
+SumOfProductVolumes=Toodete ruumala summa
+SumOfProductWeights=Toodete kaalude summa

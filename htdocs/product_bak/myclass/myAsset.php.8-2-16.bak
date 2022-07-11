@@ -1,0 +1,244 @@
+<?php
+
+class asset {
+
+    private $db = null;
+
+    public function __construct($database) {
+        $this->db = $database;
+    }
+
+    public function getAsset($cod_famiglia = "", $cod_asset = "", $id_magazzino = "") {
+
+        if (empty($cod_famiglia) && empty($cod_asset)) {
+            return null;
+        }
+        $sql = "SELECT * ";
+        $sql .= " FROM " . MAIN_DB_PREFIX . "asset as a ";
+        if (!empty($cod_famiglia)) {
+            $magazzino = "";
+            if (!empty($id_magazzino)) {
+                $magazzino = " AND a.id_magazzino = " . $id_magazzino;
+            }
+            $sql .= "WHERE a.cod_famiglia LIKE " . "'%" . $cod_famiglia . "%'" . $magazzino;
+        } else if (!empty($cod_asset)) {
+
+            $magazzino = "";
+            if (!empty($id_magazzino)) {
+                $magazzino = " AND a.id_magazzino = " . $id_magazzino;
+            }
+            $sql .= "WHERE a.cod_asset LIKE " . "'%" . $cod_asset . "%'" . $magazzino;
+        }
+        $assets = array();
+        $res = $this->db->query($sql);
+        if ($res) {
+            while ($obj_stTec = $res->fetch_array(MYSQLI_ASSOC)) {
+                $assets[] = $obj_stTec;
+            }
+        }
+        return $assets;
+    }
+
+    public function getAssetFromFamily($codice_famiglia) {
+        if (empty($codice_famiglia)) {
+            return null;
+        }
+        $sql = "SELECT * FROM " . MAIN_DB_PREFIX . "asset as a ";
+        $sql .= " WHERE a.cod_famiglia LIKE '" . $codice_famiglia . "'";
+        $sql .= " ORDER BY a.id";
+        $res = $this->db->query($sql);
+        $assets = array();
+        if ($res) {
+            while ($arr_asset = $res->fetch_array(MYSQLI_ASSOC)) {
+                $assets[] = $arr_asset;
+            }
+            return $assets;
+        }
+        return null;
+    }
+
+    public function getMyAsset($code_asset = "") {
+        if (empty($code_asset)) {
+            return false;
+        }
+        $sql = "SELECT * ";
+        $sql .= " FROM " . MAIN_DB_PREFIX . "asset as a ";
+        $sql .= " WHERE cod_asset LIKE '" . $code_asset . "'";
+        $res = $this->db->query($sql);
+        if ($res) {
+            $obj_asset = $res->fetch_array(MYSQLI_ASSOC);
+            return $obj_asset;
+        }
+        return false;
+    }
+
+    public function getAssetFromRicerca($nome_campo = "", $val_ricerca = "", $id_magazzino = "") {
+        if (empty($nome_campo)) {
+            return false;
+        }
+        $where_magazzino = "";
+        if (!empty($id_magazzino)) {
+            $where_magazzino = " AND a.id_magazzino = " . $id_magazzino;
+        }
+       // $val_ricerca = "%".$val_ricerca."%";
+        $sql = "SELECT * ";
+        $sql .= " FROM " . MAIN_DB_PREFIX . "asset as a ";
+        $sql .= " WHERE $nome_campo LIKE '" . $val_ricerca . "'".$where_magazzino;
+        $res = $this->db->query($sql);
+        if ($res) {
+            while ($arr_asset = $res->fetch_array(MYSQLI_ASSOC)) {
+                $obj_asset[] = $arr_asset;
+            }
+            return $obj_asset;
+        }
+        return false;
+    }
+
+    /**
+     * elimina gli asset della famiglia
+     * @param type $codice_famiglia il codice della famiglia
+     * @return boolean
+     */
+    public function deleteAsset_fromFamily($codice_famiglia) {
+        if (empty($codice_famiglia)) {
+            return false;
+        }
+        $sql = "DELETE FROM " . MAIN_DB_PREFIX . "asset ";
+        $sql .= " WHERE cod_famiglia LIKE '" . $codice_famiglia . "'";
+        $res = $this->db->query($sql);
+        return $res;
+    }
+
+    private function eliminaAsset($code_asset) {
+        if (empty($code_asset)) {
+            return false;
+        }
+        $sql = "DELETE FROM " . MAIN_DB_PREFIX . "asset ";
+        $sql .= " WHERE cod_asset LIKE '" . $code_asset . "'";
+        $res = $this->db->query($sql);
+        return $res;
+    }
+
+    public function deleteAsset_decFamiglia($code_asset) {
+        if (empty($code_asset)) {
+            return false;
+        }
+        $asset = $this->getMyAsset($code_asset);
+        $stato_fisico_asset = $asset['stato_fisico']; // mi ottengo lo stato fisico per vedere se è in uso o dismesso, in uno dei due casi non occore decrementare
+        $eliminato = $this->eliminaAsset($code_asset);
+        if ($eliminato == false) { // se l'asset non è stato eliminato 
+            return false; // ritorna false;
+        }
+        $codice_famiglia = $asset['cod_famiglia'];
+        // ottengo il valore della scorta.
+        if ($stato_fisico_asset != 2 || $stato_fisico_asset != 5) { // se non è in uso o dismesso, allora decrementa
+            $query = "SELECT f.stock as scorta ";
+            $query .= " FROM " . MAIN_DB_PREFIX . "product as f ";
+            $query .= "WHERE f.ref = " . "'" . $codice_famiglia . "'";
+            $result = $this->db->query($query);
+            if ($result) {
+                $obj = $this->db->fetch_object($result);
+                $tot_scorte = (int) $obj->scorta; // ottengo il valore della scorta
+                if ($tot_scorte > 0) { // se il valore della scorta è maggiore di zero (ovvero non è il primo record)
+                    $tot_scorte--; // decremento il valore della scorta
+                    $query = "UPDATE " . MAIN_DB_PREFIX . "product ";
+                    $query .= "SET stock = " . $tot_scorte;
+                    $query .= " WHERE ref LIKE " . "'" . $codice_famiglia . "'";
+                    $res = $this->db->query($query); // aggiorno la scorta decrementato di 1
+                    return $res;
+                }
+            }
+        }
+        return false; // errore aggiornamento
+    }
+
+    /*
+     * Metodo che controlla lo stato fisico dell'asset.
+     * se lo stato fisico è 1 o 5 allora non decrementa (return false)
+     * 
+     */
+
+    /**
+     * return 1 (incremento), 0 invariato, -1 (decremento)
+     * @param type $stato_fisico_inserito
+     */
+    public function seIncOrDec($codice_asset, $stato_fisico_inserito) {
+
+        if (empty($codice_asset)) {
+            return 0;
+        }
+        $query = "SELECT a.stato_fisico "; // prendere lo stato fisico
+        $query .= " FROM " . MAIN_DB_PREFIX . "asset as a ";
+        $query .= "WHERE a.cod_asset LIKE " . "'" . $codice_asset . "'";
+        $result = $this->db->query($query);
+        if ($result) {
+            $obj = $this->db->fetch_object($result);
+            $stato_fisico_db = (int) $obj->stato_fisico;
+        } else { // se la query fallisce
+            return 0;
+        }
+        // se arriva qui vuol dire che la query è stata eseguita
+
+        if ($stato_fisico_inserito == 2 || $stato_fisico_inserito == 5) {
+            if ($stato_fisico_db == $stato_fisico_inserito) { // se i valori sono uguali vuol dire che non ha modigicato il casmpo dello stato fisico
+                return 0;
+            } else if ($stato_fisico_db == 2 || $stato_fisico_db == 5) {
+                return 0;
+            }
+            return -1;
+        } else if ($stato_fisico_db == 2 || $stato_fisico_db == 5) { // se lo stato nel db è in uso e dismesso // ma quello inserito è un altro stato
+            if ($stato_fisico_db != $stato_fisico_inserito) {
+                return 1;
+            }
+        }
+
+
+        return 0; // tutti gli altri casi
+    }
+
+    public function decrementa_scorta($code_asset) {
+        $asset = $this->getMyAsset($code_asset);
+        $codice_famiglia = $asset['cod_famiglia'];
+        $query = "SELECT f.stock as scorta ";
+        $query .= " FROM " . MAIN_DB_PREFIX . "product as f ";
+        $query .= "WHERE f.ref = " . "'" . $codice_famiglia . "'";
+        $result = $this->db->query($query);
+        if ($result) {
+            $obj = $this->db->fetch_object($result);
+            $tot_scorte = (int) $obj->scorta; // ottengo il valore della scorta
+            if ($tot_scorte > 0) { // se il valore della scorta è maggiore di zero (ovvero non è il primo record)
+                $tot_scorte--; // decremento il valore della scorta
+                $query = "UPDATE " . MAIN_DB_PREFIX . "product ";
+                $query .= "SET stock = " . $tot_scorte;
+                $query .= " WHERE ref LIKE " . "'" . $codice_famiglia . "'";
+                $res = $this->db->query($query); // aggiorno la scorta decrementato di 1
+                return $res;
+            }
+        }
+        return false;
+    }
+
+    public function incrementa_scorta($code_asset) {
+
+        $asset = $this->getMyAsset($code_asset);
+        $codice_famiglia = $asset['cod_famiglia'];
+        $query = "SELECT f.stock as scorta ";
+        $query .= " FROM " . MAIN_DB_PREFIX . "product as f ";
+        $query .= "WHERE f.ref = " . "'" . $codice_famiglia . "'";
+        $result = $this->db->query($query);
+        if ($result) {
+            $obj = $this->db->fetch_object($result);
+            $tot_scorte = (int) $obj->scorta; // ottengo il valore della scorta
+            if ($tot_scorte >= 0) { // se il valore della scorta è maggiore di zero (ovvero non è il primo record)
+                $tot_scorte++; // decremento il valore della scorta
+                $query = "UPDATE " . MAIN_DB_PREFIX . "product ";
+                $query .= "SET stock = " . $tot_scorte;
+                $query .= " WHERE ref LIKE " . "'" . $codice_famiglia . "'";
+                $res = $this->db->query($query); // aggiorno la scorta decrementato di 1
+                return $res;
+            }
+        }
+        return false;
+    }
+
+}

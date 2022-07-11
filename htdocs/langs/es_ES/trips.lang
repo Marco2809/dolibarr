@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Desplazamiento
+Trips=Desplazamientos
+TripsAndExpenses=Honorarios
+TripsAndExpensesStatistics=Estadísticas de honorarios
+TripCard=Ficha honorario
+AddTrip=Crear honorario
+ListOfTrips=Listado de honorarios
+ListOfFees=Listado notas de honorarios
+NewTrip=Nuevo honorario
+CompanyVisited=Empresa/institución visitada
+Kilometers=Kilometros
+FeesKilometersOrAmout=Importe o kilómetros
+DeleteTrip=Eliminar honorario
+ConfirmDeleteTrip=¿Está seguro de querer eliminar este honorario?
+TF_OTHER=Otro
+TF_LUNCH=Dieta
+TF_TRIP=Viaje
+ListTripsAndExpenses=Listado notas de honorarios
+ExpensesArea=Área de Notas de honorarios
+SearchATripAndExpense=Buscar un honorario

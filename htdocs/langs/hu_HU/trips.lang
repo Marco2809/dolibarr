@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=utazás
+Trips=Utak
+TripsAndExpenses=Utazások és kiadások
+TripsAndExpensesStatistics=Utazások és kiadások statisztikák
+TripCard=Utazás kártya
+AddTrip=Út hozzáadása
+ListOfTrips=Utazások listája
+ListOfFees=Költségek listája
+NewTrip=Új út
+CompanyVisited=Látogatott Cég/alapítvány
+Kilometers=Kilométerek
+FeesKilometersOrAmout=Kilóméterek száma
+DeleteTrip=Utazás törlése
+ConfirmDeleteTrip=Biztos törölni akarja ezt az utat?
+TF_OTHER=Other
+TF_LUNCH=Lunch
+TF_TRIP=Trip
+ListTripsAndExpenses=Utak és kiadások listája
+ExpensesArea=Kirándulások és kiadások területén
+SearchATripAndExpense=Keresés út és költségek

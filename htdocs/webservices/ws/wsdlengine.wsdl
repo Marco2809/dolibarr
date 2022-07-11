@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+     xmlns:tns="http://www.html.it/php_ws_soap" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" 
+     targetNamespace="http://www.html.it/php_ws_soap">
+	<types>
+		<xs:schema targetNamespace="http://www.html.it/php_ws_soap">
+
+				<xs:element name="nome" type="xs:string"/>
+			<xs:element name="asset" type="xs:string"/>
+
+			<xs:element name="ricerca" type="xs:string"/>
+			<xs:element name="ricercarisposta" type="xs:string"/>
+
+			<xs:element name="assetconv" type="xs:string"/>
+			<xs:element name="assetconvrisposta" type="xs:string"/>
+
+			<xs:element name="assetcens" type="xs:string"/>
+			<xs:element name="assetcensrisposta" type="xs:string"/>
+
+			<xs:element name="labels" type="xs:string"/>
+			<xs:element name="labelsrisposta" type="xs:string"/>
+
+			<xs:element name="addasset" type="xs:string"/>
+			<xs:element name="addassetrisposta" type="xs:string"/>
+
+			<xs:element name="setstorico" type="xs:string"/>
+			<xs:element name="setstoricorisposta" type="xs:string"/>
+
+			<xs:element name="updateasset" type="xs:string"/>
+			<xs:element name="updateassetrisposta" type="xs:string"/>
+
+			<xs:element name="movetoutilizzati" type="xs:string"/>
+			<xs:element name="movetoutilizzatirisposta" type="xs:string"/>
+
+			<xs:element name="addtotck" type="xs:string"/>
+			<xs:element name="addtotckrisposta" type="xs:string"/>
+
+		</xs:schema>
+	</types>
+        
+        <message name="prendiAsset">
+		<part name="nome" type="xs:string"/>
+	</message>
+	<message name="prendiAssetRisposta">
+		<part name="asset" type="xs:string"/>
+	</message>
+
+<message name="getLabels">
+		<part name="labels" type="xs:string"/>
+	</message>
+	<message name="labelsRisposta">
+		<part name="labelsrisposta" type="xs:string"/>
+	</message>
+
+	 <message name="doSearch">
+		<part name="ricerca" type="xs:string"/>
+	</message>
+	<message name="doSearchRisposta">
+		<part name="ricercarisposta" type="xs:string"/>
+	</message>
+
+	 <message name="getAssetConv">
+		<part name="assetconv" type="xs:string"/>
+	</message>
+	<message name="getAssetConvRisposta">
+		<part name="assetconvrisposta" type="xs:string"/>
+	</message>
+
+	 <message name="censisciAsset">
+		<part name="assetcens" type="xs:string"/>
+	</message>
+	<message name="censisciAssetRisposta">
+		<part name="assetcensrisposta" type="xs:string"/>
+	</message>
+
+	 <message name="aggiungiAsset">
+		<part name="addasset" type="xs:string"/>
+	</message>
+	<message name="aggiungiAssetRisposta">
+		<part name="addassetrisposta" type="xs:string"/>
+	</message>
+
+ <message name="aggiornaAsset">
+		<part name="updateasset" type="xs:string"/>
+	</message>
+	<message name="aggiornaAssetRisposta">
+		<part name="updateassetrisposta" type="xs:string"/>
+	</message>
+
+	 <message name="addToTck">
+		<part name="addtotck" type="xs:string"/>
+	</message>
+	<message name="addToTckRisposta">
+		<part name="addtotckrisposta" type="xs:string"/>
+	</message>
+
+	 <message name="setTracking">
+		<part name="setstorico" type="xs:string"/>
+	</message>
+	<message name="setStoricoRisposta">
+		<part name="setstoricorisposta" type="xs:string"/>
+	</message>
+
+	 <message name="moveToUtilizzati">
+		<part name="movetoutilizzati" type="xs:string"/>
+	</message>
+	<message name="moveToUtilizzatiRisposta">
+		<part name="movetoutilizzatirisposta" type="xs:string"/>
+	</message>
+
+	<portType name="WebServiceTest">
+
+                <operation name="getAllFromMag">
+			<input message="tns:prendiAsset"/>
+			<output message="tns:prendiAssetRisposta"/>
+		</operation>
+
+		   <operation name="searchP_F_A">
+			<input message="tns:getLabels"/>
+			<output message="tns:labelsRisposta"/>
+		</operation>
+
+		<operation name="getAssetConv">
+			<input message="tns:getAssetConv"/>
+			<output message="tns:getAssetConvRisposta"/>
+		</operation>
+
+		  <operation name="searchByMag">
+			<input message="tns:doSearch"/>
+			<output message="tns:doSearchRisposta"/>
+		</operation>
+
+	  <operation name="addToTck">
+			<input message="tns:addToTck"/>
+			<output message="tns:addToTckRisposta"/>
+		</operation>
+
+		<operation name="censisciAsset">
+			<input message="tns:censisciAsset"/>
+			<output message="tns:censisciAssetRisposta"/>
+		</operation>
+
+		<operation name="newAsset">
+			<input message="tns:aggiungiAsset"/>
+			<output message="tns:aggiungiAssetRisposta"/>
+		</operation>
+
+		<operation name="updateAsset">
+			<input message="tns:aggiornaAsset"/>
+			<output message="tns:aggiornaAssetRisposta"/>
+		</operation>
+
+		<operation name="setTracking">
+			<input message="tns:setTracking"/>
+			<output message="tns:setStoricoRisposta"/>
+		</operation>
+
+		<operation name="moveToUtilizzati">
+			<input message="tns:moveToUtilizzati"/>
+			<output message="tns:moveToUtilizzatiRisposta"/>
+		</operation>
+
+	</portType>
+        
+	<binding name="WebServiceSOAPBinding" type="tns:WebServiceTest">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" type="rpc"/>
+
+		<operation name="getAllFromMag">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/getAllFromMag"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+	<operation name="addToTck">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/addToTck"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+			<operation name="moveToUtilizzati">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/moveToUtilizzati"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+<operation name="updateAsset">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/updateAsset"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+<operation name="searchP_F_A">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/searchP_F_A"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+			<operation name="censisciAsset">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/censisciAsset"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+        
+
+			<operation name="searchByMag">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/searchByMag"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+		<operation name="getAssetConv">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/getAssetConv"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+				<operation name="newAsset">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/newAsset"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+				<operation name="setTracking">
+                        <!-- Localizzazione del service deployato sul server. -->
+			<soap:operation 
+                             soapAction="http://fastdata2.service-tech.org/webservices/ws/serverws.php/setTracking"/>
+			<input>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</input>
+			<output>
+				<soap:body use="encoded" 
+                                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+                                     namespace="http://www.html.it/php_ws_soap"/>
+			</output>
+		</operation>
+
+	</binding>
+	
+	<service name="GetAsset">
+		<port name="GetAssets" binding="tns:WebServiceSOAPBinding">
+			<soap:address location="http://fastdata2.service-tech.org/webservices/ws/serverws.php"/>
+		</port>
+	</service>
+        </definitions>

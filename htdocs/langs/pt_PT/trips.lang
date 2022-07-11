@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Deslocação
+Trips=Deslocações
+TripsAndExpenses=Deslocações e Despesas
+TripsAndExpensesStatistics=Viagens e estatísticas despesas
+TripCard=Ficha de Deslocação
+AddTrip=Adicionar Deslocação
+ListOfTrips=Lista de Deslocações
+ListOfFees=Lista de Taxas
+NewTrip=Nova Deslocação
+CompanyVisited=Empresa/Instituição Visitada
+Kilometers=Quilómetros
+FeesKilometersOrAmout=Quantidade de Quilómetros
+DeleteTrip=Eliminar Deslocação
+ConfirmDeleteTrip=Deseja mesmo eliminar esta deslocação?
+TF_OTHER=Outro
+TF_LUNCH=Alimentação
+TF_TRIP=Viagem
+ListTripsAndExpenses=Lista de viagens e despesas
+ExpensesArea=Viagens e área de despesas
+SearchATripAndExpense=Procure uma viagem e despesas

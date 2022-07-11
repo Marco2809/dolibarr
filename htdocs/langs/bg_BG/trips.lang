@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Екскурзия
+Trips=Екскурзии
+TripsAndExpenses=Екскурзии и разноски
+TripsAndExpensesStatistics=Екскурзии и разходи статистика
+TripCard=Екскурзия карта
+AddTrip=Добави пътуване
+ListOfTrips=Списък на пътуванията
+ListOfFees=Списък на такси
+NewTrip=Нов пътуване
+CompanyVisited=Фирмата/организацията е посетена
+Kilometers=Км
+FeesKilometersOrAmout=Сума или км
+DeleteTrip=Изтриване на пътуване
+ConfirmDeleteTrip=Сигурен ли сте, че искате да изтриете това пътуване?
+TF_OTHER=Друг
+TF_LUNCH=Обяд
+TF_TRIP=Екскурзия
+ListTripsAndExpenses=Списък на пътувания и разходи
+ExpensesArea=Екскурзии и разходи площ
+SearchATripAndExpense=Търсене на пътуване и разходи

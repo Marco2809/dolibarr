@@ -1,0 +1,11 @@
+Dolibarr language file - es_PR - main
+DIRECTION=ltr
+SeparatorDecimal=,
+SeparatorThousand=None
+AmountVAT=Importe IVU
+TotalVAT=Total IVU
+IncludedVAT=IVU incluido
+HT=Sin IVU
+TTC=IVU incluido
+VAT=IVU
+VATRate=Tasa IVU

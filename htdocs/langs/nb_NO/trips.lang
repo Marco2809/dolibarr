@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Reise
+Trips=Reiser
+TripsAndExpenses=Reiser og utgifter
+TripsAndExpensesStatistics=Turer og utgifter statistikk
+TripCard=Reisekort
+AddTrip=Legg til reise
+ListOfTrips=Oversikt over reiser
+ListOfFees=Oversikt over avgifter
+NewTrip=Ny reise
+CompanyVisited=Firma/organiasjon besøkt
+Kilometers=Kilometer
+FeesKilometersOrAmout=Beløp eller kilometer
+DeleteTrip=Slett reise
+ConfirmDeleteTrip=Er du sikker på at du vil slette denne reisen?
+TF_OTHER=Annet
+TF_LUNCH=Lunsj
+TF_TRIP=Reise
+ListTripsAndExpenses=Liste over turer og utgifter
+ExpensesArea=Turer og utgifter området
+SearchATripAndExpense=Søk etter tur og regning

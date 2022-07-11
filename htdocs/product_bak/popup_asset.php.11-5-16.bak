@@ -1,0 +1,249 @@
+
+
+<?php
+
+require '../main.inc.php';
+require_once DOL_DOCUMENT_ROOT . '/product/stock/class/entrepot.class.php';
+require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.product.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
+require_once DOL_DOCUMENT_ROOT . '/product/myclass/myMagazzino.php';
+require_once DOL_DOCUMENT_ROOT . '/product/myclass/myAsset.php';
+
+$user_id = $user->id;
+print '<body bgcolor="grey">';
+print '<style>
+    span { font-family: Arial; font-size:12px; color:#444;}
+    .tabella tr:nth-child(odd) td{
+        background: #feffad;
+    }
+    .tabella tr:nth-child(even) td{
+        background: #dbffc6;
+    }
+</style>';
+
+print ' <script>
+        function filltextfield(f){
+            var text=f.txttext.value;
+            window.opener.tmp=text;
+            window.opener.getValues();
+            window.close();
+            }
+    </script>';
+
+print
+        '<fieldset>
+    <form action ="">
+      <label> Ricerca </label>
+     <select  name="ricerca_per">
+     <option value="ric_codeasset">Codice asset</option>
+        <option value="ric_codefamiglia">Codice famiglia</option>
+        <option value="ric_etichetta">Etichetta</option>
+        <option value="ric_libera">Ricerca libera</option>
+        </select> 
+         <input type="text" name="run_ricerca">
+        <input type="submit" value="cerca">
+       
+        <form>
+ </fieldset>';
+//print '<body onunload="javascript:window.opener.location.reload ();">';
+
+$tipo_ricerca = isset($_REQUEST['run_ricerca']) ? $_REQUEST['run_ricerca'] : null;
+if (empty($tipo_ricerca))
+{
+    //$tipo_ricerca =   isset($_COOKIE['codice']) ? $_COOKIE['codice'] : null ;
+}
+
+if (isset($tipo_ricerca))
+{
+    //setcookie("codice",$tipo_ricerca);
+    //ricavo il codice magazzino
+    $sql = "SELECT * FROM tmp_form";
+    $result = $db->query($sql);
+    $obj = $db->fetch_object($result);
+    $cod_magazzino_scelto = $obj->tmp_magsorg;
+
+    //action ricerca
+    $action_tipo_ricerca = isset($_REQUEST['ricerca_per']) ? $_REQUEST['ricerca_per'] : "";
+    $html = "";
+    $run_ricerca = $_REQUEST['run_ricerca'];
+
+    $posizione = strpos($run_ricerca, "'");
+    $apostrofo = $run_ricerca[$posizione];
+    if ($apostrofo === "'")
+    {
+        $run_ricerca[$posizione] = "-";
+    }
+
+
+    switch ($action_tipo_ricerca)
+    {
+        case "ric_codeasset":
+            $html .= getAsset_from_ricerca($db, $action_tipo_ricerca, $run_ricerca, $cod_magazzino_scelto);
+            break;
+
+        case "ric_codefamiglia":
+            $html .= getAsset_from_ricerca($db, $action_tipo_ricerca, $run_ricerca, $cod_magazzino_scelto);
+            break;
+
+        case "ric_etichetta":
+            $html .= getAsset_from_ricerca($db, $action_tipo_ricerca, $run_ricerca, $cod_magazzino_scelto);
+            break;
+
+        case "ric_libera":
+            $html .= getAsset_from_ricerca($db, $action_tipo_ricerca, $run_ricerca, $cod_magazzino_scelto);
+            break;
+    }
+}
+$html .= "</table>";
+$submit = "";
+
+
+$submit = '<center> <input type="submit" class="button" name="popoup_addasset"  value="' . "Aggiungi" . '">';
+$submit .= ' <input type="submit"  class="button"  name="popoup_annull" value="' . "Annulla" . '"></center> ';
+$url_form = DOL_URL_ROOT . '/product/movimentazione.php?mainmenu=products';
+$crea_form = '<form  method="POST" action="' . $url_form . '">' . $html . $submit . '</form>';
+print $crea_form;
+$r = 2;
+$aggiunto = $_GET['popoup_addasset'];
+if (isset($aggiunto))
+{
+    $redir = DOL_URL_ROOT . '/product/movimentazione.php?mainmenu=products';
+    if (isset($_REQUEST['checkbox_asset']))
+    {
+        //query
+        //$query = "DROP TABLE IF EXISTS tmp_asset";
+        // $eliminato = $db->query($query);
+        $eliminato = true;
+        if ($eliminato)
+        {
+
+            $sql = "CREATE TABLE  tmp_asset(temp_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,id_user VARCHAR(100), tmp_idasset VARCHAR(1000))";
+            $result = $db->query($sql);
+            $query = "SELECT COUNT(*) AS count FROM tmp_asset WHERE id_user = " . $user_id;
+            $res = $db->query($query);
+           
+            if ($res)
+            {
+                $obj_tot = $db->fetch_object($res);
+                if ($obj_tot->count == 0)
+                {
+                    $encode = json_encode($_REQUEST['checkbox_asset']);
+                    $sql = "INSERT INTO tmp_asset(";
+                    $sql.= "tmp_idasset";
+                    $sql.= ",id_user";
+                    $sql.= ") VALUES (";
+                    $sql.= "'" . $encode . "'";
+                    $sql.= ",'" . $user_id . "'";
+                    $sql.= ")";
+                    $inserito = $db->query($sql);
+                } else
+                { // esiste già la tabella, occorre fare update 
+                    $query = "SELECT tmp_idasset FROM tmp_asset ";
+                    $res = $db->query($query);
+                    $obj = $db->fetch_object($res);
+                    $array_assetDB = json_decode($obj->tmp_idasset);
+                    $encode = json_encode($_REQUEST['checkbox_asset']);
+                    $merge_checkbox = array_merge($array_assetDB, $_REQUEST['checkbox_asset']);
+                    $merge_checkbox = array_unique($merge_checkbox);
+                    $merge_checkbox = array_values($merge_checkbox);
+
+                    $encode = json_encode($merge_checkbox);
+
+                    $sql = "UPDATE tmp_asset SET tmp_idasset=" . "'" . $encode . "'";
+                    $sql .= " WHERE id_user = " . $user_id;
+                    $db->query($sql);
+                }
+            }
+        }
+    }
+    //$var = "?var='g'";
+    // echo '<script>opener.location.href=' . '"' . $redir.$var . '"' . ';self.close();</script>';
+    // print '<a href="JavaScript:window.self.close()">Close</a>';
+    echo '<script>opener.location.href=' . '"' . $redir . $var . '"' . ';self.close();</script>';
+}
+
+function getAsset_from_ricerca($db, $action_tipo_ricerca, $valore_ricercato, $cod_magazzino_scelto)
+{
+    $obj_asset = new asset($db);
+    if ($action_tipo_ricerca == "ric_codeasset")
+    {
+        $assets = $obj_asset->getAsset("", $valore_ricercato, $cod_magazzino_scelto);
+    } else if ($action_tipo_ricerca == "ric_codefamiglia")
+    {
+        $assets = $obj_asset->getAsset($valore_ricercato, "", $cod_magazzino_scelto);
+    } else if ($action_tipo_ricerca == "ric_etichetta")
+    {
+        $assets = $obj_asset->getAssetFromRicerca("label", $valore_ricercato, $cod_magazzino_scelto);
+    } else if ($action_tipo_ricerca == "ric_libera")
+    {
+        $assets = $obj_asset->getAssetFromRicerca("ric_libera", $valore_ricercato, $cod_magazzino_scelto);
+    }
+    $riemi_checkbox = "";
+    $html = "";
+    if (!empty($assets))
+    {
+
+        $html = '<br><table border="1" class="noborder">';
+        $html .= "<tr>";
+        $html .= "<td></td>";
+        $html .= "<td><strong>Codice asset</strong></td>";
+        $html .= "<td><strong>Etichetta</strong></td>";
+        $html .= "<td><strong>Stato fisico</strong></td>";
+        $html .= "<td><strong>Stato tecnico</strong></td>";
+        $html .= "</tr>";
+    }
+    for ($i = 0; $i < count($assets); $i++)
+    {
+        $asset = $assets[$i];
+        $val_stato_fisico = $asset['stato_fisico'];
+        if ($val_stato_fisico == 3)
+        { // se è in transito non occorre selezionare 
+            continue;
+        }
+
+        $color = '#FFFFFF';
+        $html .= "<tr style='background-color: " . $color . ";'>";
+        $cod_asset = $asset['cod_asset'];
+        $etichetta = $asset['label'];
+        $stato_fisico = "";
+        switch ($val_stato_fisico)
+        {
+            case "1":
+                $stato_fisico = "Giacenza";
+                break;
+            case "2":
+                $stato_fisico = "In uso";
+                break;
+            case "3":
+                $stato_fisico = "In transito";
+                break;
+            case "4":
+                $stato_fisico = "In lab";
+                break;
+        }
+        $stato_tecnico = "";
+        $val_stato_tecnico = $asset['stato_tecnico'];
+        switch ($val_stato_tecnico)
+        {
+            case "1":
+                $stato_tecnico = "Nuovo";
+                break;
+            case "2":
+                $stato_tecnico = "Ricondizionato";
+                break;
+            case "3":
+                $stato_tecnico = "Guasto";
+                break;
+            case "4":
+                $stato_tecnico = "Sconosciuto";
+                break;
+        }
+
+        $riemi_checkbox = '<input type="checkbox" name="checkbox_asset[]" value=' . '"' . $cod_asset . '"' . '> <br>';
+        $html .= '<td>' . $riemi_checkbox . '</td>' . '<td>' . $cod_asset . '</td>' . '<td>' . $etichetta . '</td>' . '<td>' . $stato_fisico . '</td>' . '<td>' . $stato_tecnico . '</td>';
+        $html .= "</tr>";
+    }
+    return $html;
+}
+?>

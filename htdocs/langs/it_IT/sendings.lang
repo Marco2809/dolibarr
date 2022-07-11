@@ -1,0 +1,76 @@
+# Dolibarr language file - Source file is en_US - sendings
+RefSending=Rif. spedizione
+Sending=Spedizione
+Sendings=Spedizioni
+Shipment=Spedizione
+Shipments=Spedizioni
+Receivings=Ricezioni
+SendingsArea=Sezione spedizioni
+ListOfSendings=Elenco delle spedizioni
+SendingMethod=Metodo di invio
+SendingReceipt=Ricevuta di spedizione
+LastSendings=Ultime %s spedizioni
+SearchASending=Ricerca di una spedizione
+StatisticsOfSendings=Statistiche spedizioni
+NbOfSendings=Numero di spedizioni
+NumberOfShipmentsByMonth=Numero di spedizioni per mese
+SendingCard=Scheda di spedizione
+NewSending=Nuova spedizione
+CreateASending=Creazione di una spedizione
+CreateSending=Crea una spedizione
+QtyOrdered=Quantità ordinata
+QtyShipped=Quantità spedita
+QtyToShip=Quantità da spedire
+QtyReceived=Quantità ricevuta
+KeepToShip=Ancora da spedire
+OtherSendingsForSameOrder=Altre Spedizioni per questo ordine
+DateSending=Data spedizione
+DateSendingShort=Data di invio
+SendingsForSameOrder=Spedizioni per lo stesso ordine
+SendingsAndReceivingForSameOrder=Spedizioni e ricezioni per lo stesso ordine
+SendingsToValidate=Spedizione da convalidare
+StatusSendingCanceled=Annullato
+StatusSendingDraft=Bozza
+StatusSendingValidated=Convalidata (prodotti per la spedizione o già spediti)
+StatusSendingProcessed=Processato
+StatusSendingCanceledShort=Annullato
+StatusSendingDraftShort=Bozza
+StatusSendingValidatedShort=Convalidata
+StatusSendingProcessedShort=Processato
+SendingSheet=Documento di Trasporto (D.d.t.)
+Carriers=Vettori
+Carrier=Vettore
+CarriersArea=Sezione vettori
+NewCarrier=Nuovo vettore
+ConfirmDeleteSending=Sei sicuro di voler eliminare questa spedizione?
+ConfirmValidateSending=Sei sicuro di voler convalidare questa spedizione?
+ConfirmCancelSending=Sei sicuro di voler annullare questa spedizione?
+GenericTransport=Trasporto generico
+Enlevement=Ottenuto dal cliente
+DocumentModelSimple=Modello semplice di documento
+DocumentModelMerou=Merou modello A5
+WarningNoQtyLeftToSend=Attenzione, non sono rimasti prodotti per la spedizione.
+StatsOnShipmentsOnlyValidated=Statistiche calcolate solo sulle spedizioni convalidate. La data è quella di conferma spedizione (la data di consegna prevista non è sempre conosciuta).
+DateDeliveryPlanned=Data di consegna prevista
+DateReceived=Data di consegna ricevuto
+SendShippingByEMail=Invia spedizione via EMail
+SendShippingRef=Invia %s spedizione
+ActionsOnShipping=Acions sulla spedizione
+LinkToTrackYourPackage=Link a monitorare il tuo pacchetto
+ShipmentCreationIsDoneFromOrder=Per il momento, la creazione di una nuova spedizione viene effettuata dalla scheda dell'ordine.
+RelatedShippings=Spedizioni collegate
+ShipmentLine=Filiera di spedizione
+CarrierList=Elenco dei trasportatori
+
+# Sending methods
+SendingMethodCATCH=Ritiro da parte del Cliente
+SendingMethodTRANS=A cura del mittente
+SendingMethodCOLSUI=Corriere espresso
+
+# ModelDocument
+DocumentModelSirocco=Semplice modello di documento per le ricevute di consegna
+DocumentModelTyphon=Modello più completo di documento per le ricevute di consegna (logo. ..)
+
+Error_EXPEDITION_ADDON_NUMBER_NotDefined=EXPEDITION_ADDON_NUMBER costante non definita
+SumOfProductVolumes=Totale volume prodotti
+SumOfProductWeights=Totale peso prodotti

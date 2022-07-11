@@ -1,0 +1,19 @@
+INSTALL-ITA.txt
+Module name: Facture Business ITA V2 (PRO VERSION)
+Author: Claudio Aschieri <c.aschieri@19.coop> and Paolo Selis <p.selis@19.coop>
+Last Release date: May 05 2015 
+Last Version: 2.1.0
+
+== INSTALLAZIONE COMPLETA MODULO FACTURE BUSINESS ITA V2 (PRO VERSION) ==
+
+Copiare tutte le cartella all'interno della cartella principale di Dolibarr (sovrascrivendo files e cartelle).
+
+All'interno di Dolibarr dal menu laterale selezionare: IMPOSTAZIONI -> MODULI -> MODULI INTERFACCIA e attivare il modulo "Facture Business ITA V2"
+
+Dopo aver attivato il modulo procedere con la sua configurazione premendo sull'icona delle impostazioni.
+
+== MAGGIORI INFORMAZIONI ==
+
+Visita il sito http://www.dolibarr.it
+oppure
+invia una mail a: dolibarr@19.coop

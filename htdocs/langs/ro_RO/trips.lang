@@ -1,0 +1,21 @@
+# Dolibarr language file - Source file is en_US - trips
+Trip=Deplasare
+Trips=Deplasări
+TripsAndExpenses=Decont de cheltuieli
+TripsAndExpensesStatistics=Statistici Deconturi de cheltuieli
+TripCard=Fişă Cheltuieli
+AddTrip=Adaugă Decont de cheltuieli
+ListOfTrips=Lista cheltuieli
+ListOfFees=Lista note cheltuieli
+NewTrip=Decont de cheltuieli nou
+CompanyVisited=Societatea / Instituţia vizitată
+Kilometers=Kilometri
+FeesKilometersOrAmout=Valoarea  sau km
+DeleteTrip=Şterge Deplasare
+ConfirmDeleteTrip=Sigur doriţi să ştergeţi acest Decont de Cheltuieli ?
+TF_OTHER=Altele
+TF_LUNCH=Prânz
+TF_TRIP=Deplasare
+ListTripsAndExpenses=Lista Deconturi de cheltuieli
+ExpensesArea=Zona Deconturi de cheltuieli
+SearchATripAndExpense=Caută Decont de cheltuieli

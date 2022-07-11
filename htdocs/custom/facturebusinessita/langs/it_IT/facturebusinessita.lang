@@ -1,0 +1,64 @@
+# <one line to give the program's name and a brief idea of what it does.>
+# Copyright (C) 2015 Claudio Aschieri <c.aschieri@19.coop>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Generic
+FactureBusinessITA=Fatture Business ITA v2
+FactureBusinessITA=Fatture Business ITA v2
+Module190800Name = Facture Business ITA v2
+Module190800Desc = Aggiunge la gestione del piano dei conti e delle unità produttive alle righe di fatture attive e passive. Permette la generazione deil file XML per la fatturazione elettronica e consente l'esportazine dei campi
+BackToModuleList=Torna alla lista dei moduli
+FileXMLWasRemoved=File xml eliminato correttamente
+FileXMLWasGenerate=File xml generato correttamente
+ErrorFailToDeleteFileXML=Errore durante l'eliminazione del file xml
+ErrorFailToCreateFileXMLAgendaModuleRequired=Errore durante la convalida della fattura: il modulo Agenda ("Ordine del giorno") deve essere attivo
+ErrorEsenzioneIVA=Impossibile selezionare l'esenzione IVA se il valore dell'iva è diverso da 0
+FactureBusinessITARegimeFiscale=Regime fiscale
+FactureBusinessITARegimiFiscali=Regimi fiscali
+FactureBusinessITAEsigibilitaIVA=Esigibilità I.V.A.
+ErrorXMLElement=Errore sul campo
+ButtonViewFatturaPA = Visualizza la fattura PA 
+
+
+# Admin page
+FactureBusinessITASetup = Configurazione modulo Facture Business ITA v2
+Settings = Impostazioni
+FactureBusinessITAsNumberingModules=Numerazione fatture elettroniche
+FactureBusinessITAsModelModule=Modelli xml fatture elettroniche
+WatermarkOnDraftFactureBusinessITAs=Filigrana sulle bozze di fattura
+FeaturesSupported=Funzionalità supportate
+DefaultNumRefModelDesc=Numerazione di default selezionata nel modulo Fatture 
+FactureBusinessITASameAsFacture=Vedi valore modulo fatture attive
+GenericNumRefModelDescFBI=Restituisce un numero personalizzabile in base allo schema definito dalla maschera.
+FactureBusinessITAsNumberingModulesDescription=Seleziona il modello di numerazione delle fatture elettroniche. Selezionando il modello <b>"Standard Modulo Fatture"</b> la numerazione delle fatture elettroniche continuerà la numerazione delle fatture standard.
+FactureBusinessITAMainOptions=Opzioni principali
+FactureBusinessITAXMLOptions=Campi speciali per il file xml della fattura elettronica
+FactureBusinessITAUseEFacture=Utilizza tutte le funzionalità del modulo relative alla fatturazione elettronica mostrando i campi extrafields necessari alla generazione del file xml
+FactureBusinessITAUseCIPart=Utilizza tutte le funzionalità del modulo relative alla contabilità industriale mostrando i relativi campi extrafields: unità produttive, piano dei conti, date di competenza e altri
+FactureBusinessITARegimeFiscale
+FactureBusinessITASocioUnico=Socio unico
+FactureBusinessITASocioUnicoTooltip=nei casi di società per azioni e a responsabilità limitata, il campo va valorizzato per indicare se vi è un socio unico oppure se vi sono più soci (valori ammessi [SU] : socio unico [SM] : più soci) 
+FactureBusinessITAStatoLiquidazione=Stato Liquidazione
+FactureBusinessITAStatoLiquidazioneTooltip=indica se la Società si trova in stato di liquidazione oppure no (valori ammessi [LS] : in liquidazione [LN] : non in liquidazione)
+FactureBusinessITAESENZIONETOPDF=Concatena automaticamente l'esenzione iva alla descrizione della riga di fattura attiva (in modo che compaia nella stampa PDF)
+FactureBusinessITAESENZIONETOPDFalways=Per tutte le fatture
+FactureBusinessITAESENZIONETOPDFnever=Per nessuna fattura
+FactureBusinessITAESENZIONETOPDFnormal=Escludi le fatture elettroniche
+# About page
+About = About
+FactureBusinessITAAbout = A proposito di Facture Business ITA v2
+
+

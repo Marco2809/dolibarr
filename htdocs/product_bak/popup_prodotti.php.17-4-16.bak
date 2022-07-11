@@ -1,0 +1,217 @@
+
+    <?php
+    require '../main.inc.php';
+    require_once DOL_DOCUMENT_ROOT . '/product/stock/class/entrepot.class.php';
+    require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+    require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.product.class.php';
+    require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
+    require_once DOL_DOCUMENT_ROOT . '/product/myclass/myMagazzino.php';
+    require_once DOL_DOCUMENT_ROOT . '/product/myclass/myAsset.php';
+    
+    print '<body bgcolor="#ffffcc">';
+    print '<style>
+    span { font-family: Arial; font-size:12px; color:#444;}
+    .tabella tr:nth-child(odd) td{
+        background: #feffad;
+    }
+    .tabella tr:nth-child(even) td{
+        background: #dbffc6;
+    }
+</style>';
+
+    print ' <script>
+        function filltextfield(f){
+            var text=f.txttext.value;
+            window.opener.tmp=text;
+            window.opener.getValues();
+            window.close();
+            }
+    </script>';
+    print
+            '<fieldset>
+    <form action = "" >
+     <label> Ricerca </label>
+     <select  name="ricerca_per">
+     <option value="ric_prodotto">Codice prodotto</option>
+        <option value="ric_produttore">Codice produttore</option>
+        <option value="ric_etichetta">Etichetta</option>
+        <option value="ric_libera">Ricerca libera</option>
+        </select>
+        Codice prodotto<input type="text" name="run_ricerca">
+        <input type="submit" value="cerca">
+        <form>
+ </fieldset>';
+    
+    
+    
+    
+    
+//print '<body onunload="javascript:window.opener.location.reload ();">';
+
+    $action_tipo_ricerca = isset($_REQUEST['ricerca_per']) ? $_REQUEST['ricerca_per'] : null;
+    if (empty($action_tipo_ricerca))
+    {
+        //$find_cod_prodotto =   isset($_COOKIE['codice']) ? $_COOKIE['codice'] : null ;
+    }
+    
+
+    if (isset($action_tipo_ricerca))
+    {
+        //setcookie("codice",$find_cod_prodotto);
+        //ricavo il codice magazzino
+        $sql = "SELECT * FROM tmp_form";
+        $result = $db->query($sql);
+        $obj = $db->fetch_object($result);
+        $run_ricerca = $_REQUEST['run_ricerca'];
+
+        $html .= getAsset_from_ricerca($db, $action_tipo_ricerca, $run_ricerca);
+
+        $html .= "</table>";
+        $submit = "";
+
+
+        $submit = '<center> <input type="submit" class="button" name="popoup_addasset"  value="' . "Aggiungi" . '">';
+        $submit .= ' <input type="submit"  class="button"  name="popoup_annull" value="' . "Annulla" . '"></center> ';
+        $url_form = DOL_URL_ROOT . '/product/movimentazione.php';
+        $crea_form = '<form  method="POST" action="' . $url_form . '">' . $html . $submit . '</form>';
+        print $crea_form;
+        $r = 2;
+        $aggiunto = $_GET['popoup_addasset'];
+        if (isset($aggiunto))
+        {
+            $redir = DOL_URL_ROOT . '/product/movimentazione.php';
+            if (isset($_REQUEST['checkbox_prodotti']))
+            { // prende i selezionati
+                //query
+                //$query = "DROP TABLE IF EXISTS tmp_asset";
+                // $eliminato = $db->query($query);
+                $eliminato = true;
+                if ($eliminato)
+                {
+                    //$query = "DROP TABLE IF EXISTS tmp_prodotti";
+                   // $res = $db->query($query);
+                    
+                    $sql = "CREATE TABLE  tmp_prodotti(temp_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, tmp_codiceprodotto VARCHAR(250))";
+                    $result = $db->query($sql);
+                    if ($result)
+                    {
+                        $encode = json_encode($_REQUEST['checkbox_prodotti']);
+                        $sql = "INSERT INTO tmp_prodotti(";
+                        $sql.= "tmp_codiceprodotto";
+                        $sql.= ") VALUES (";
+                        $sql.= "'" . $encode . "'";
+                        $sql.= ")";
+                        $inserito = $db->query($sql);
+                        if ($inserito)
+                        {
+                            
+                        }
+                    } else
+                    { // esiste già la tabella, occorre fare update 
+                        
+                        $query = "SELECT tmp_codiceprodotto FROM tmp_prodotti ";
+                        $res = $db->query($query);
+                        $obj = $db->fetch_object($res);
+                        $array_assetDB = json_decode($obj->tmp_codiceprodotto);
+                        $encode = json_encode($_REQUEST['checkbox_prodotti']);
+                        $merge_checkbox = array_merge($array_assetDB, $_REQUEST['checkbox_prodotti']);
+                        $merge_checkbox = array_unique($merge_checkbox);
+                        $merge_checkbox = array_values($merge_checkbox);
+
+                        $encode = json_encode($merge_checkbox);
+
+                        $sql = "UPDATE tmp_prodotti SET tmp_codiceprodotto=" . "'" . $encode . "'";
+                        $sql .= " WHERE temp_id = 1";
+                        $db->query($sql);
+                        
+                    }
+                }
+            }
+            //$var = "?var='g'";
+            // echo '<script>opener.location.href=' . '"' . $redir.$var . '"' . ';self.close();</script>';
+            // print '<a href="JavaScript:window.self.close()">Close</a>';
+            echo '<script>opener.location.href=' . '"' . $redir . $var . '"' . ';self.close();</script>';
+        }
+    }
+
+    function getProdotto($db, $nome_campo = "", $val_ricerca = "")
+    {
+        if (empty($nome_campo))
+        {
+            return false;
+        }
+        $like_assegnazione  = "LIKE '" . $val_ricerca . "'";
+        if ($nome_campo == "ric_libera")
+        {
+            $like_assegnazione  = "LIKE '%" . $val_ricerca . "%'";
+            $nome_campo = "ref";
+        }
+        $sql = "SELECT * ";
+        $sql .= " FROM " . MAIN_DB_PREFIX . "product as p ";
+        $sql .= " WHERE p.$nome_campo $like_assegnazione";
+        $res = $db->query($sql);
+        if ($res)
+        {
+            $obj_prodotti = array();
+            while ($arr_asset = $res->fetch_array(MYSQLI_ASSOC))
+                {
+                $obj_prodotti[] = $arr_asset;
+                }
+            return $obj_prodotti;
+        }
+        return false;
+    }
+
+    function getAsset_from_ricerca($db, $action_tipo_ricerca, $valore_ricercato)
+    {
+           
+        
+        
+        $obj_asset = new asset($db);
+        if ($action_tipo_ricerca == "ric_prodotto")
+        {
+            $prodotti = getProdotto($db, "ref", $valore_ricercato);
+            //$assets = $obj_asset->getAsset("", $valore_ricercato, $cod_magazzino_scelto);
+        } else if ($action_tipo_ricerca == "ric_produttore")
+        {
+            $prodotti = getProdotto($db, "customcode", $valore_ricercato);
+        } else if ($action_tipo_ricerca == "ric_etichetta")
+        {
+            $prodotti = getProdotto($db, "label", $valore_ricercato);
+        } else if ($action_tipo_ricerca == "ric_libera")
+        {
+            $prodotti = getProdotto($db, "ric_libera", $valore_ricercato);
+        }
+        $riemi_checkbox = "";
+        $html = "";
+        if (!empty($prodotti))
+        {
+            $html = '<br><table border="1" class="noborder">';
+            $html .= "<tr>";
+            $html .= "<td></td>";
+            $html .= "<td><strong>Codice prodotto</strong></td>";
+            $html .= "<td><strong>Codice produttore</strong></td>";
+            $html .= "<td><strong>Etichetta</strong></td>";
+            $html .= "<td><strong>Scorta disponibile</strong></td>";
+            $html .= "</tr>";
+        }
+        
+     
+        for ($i = 0; $i < count($prodotti); $i++)
+        {
+            $prodotto = $prodotti[$i];
+
+            $color = '#FFFFFF';
+            $html .= "<tr style='background-color: " . $color . ";'>";
+            $etichetta = $prodotto['label'];
+            $codice_produttore = $prodotto['customcode'];
+            $scorta_disponibile = $prodotto['stock'];
+       
+            $riemi_checkbox = '<input type="checkbox" name="checkbox_prodotti[]" value=' . '"' . $prodotto['rowid'] . '"' . '> <br>';
+            $html .= '<td>' . $riemi_checkbox . '</td>' . '<td>' . $prodotto['ref'] . '</td>' . '<td>' . $codice_produttore . '</td>' . '<td>' . $etichetta . '</td>' . '<td>' . $scorta_disponibile . '</td>';
+            $html .= "</tr>";
+        }
+        return $html;
+    }
+    ?>
+   

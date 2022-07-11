@@ -1,0 +1,775 @@
+<?php
+
+/**
+ *  \file       htdocs/product/liste.php
+ *  \ingroup    produit
+ *  \brief      Page to list products and services
+ */
+require '../main.inc.php';
+require_once DOL_DOCUMENT_ROOT . '/product/stock/class/entrepot.class.php';
+require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.product.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
+require_once DOL_DOCUMENT_ROOT . '/product/myclass/myMagazzino.php';
+require_once DOL_DOCUMENT_ROOT . '/product/myclass/myAsset.php';
+if (!empty($conf->categorie->enabled))
+    require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
+
+$langs->load("products");
+$langs->load("stocks");
+$langs->load("suppliers");
+
+$action = GETPOST('action');
+$ricerca = GETPOST('ricerca');
+$sref = GETPOST("sref");
+$sbarcode = GETPOST("sbarcode");
+$snom = GETPOST("snom");
+$sall = GETPOST("sall");
+$type = GETPOST("type", "int");
+$search_sale = GETPOST("search_sale");
+$search_categ = GETPOST("search_categ", 'int');
+$tosell = GETPOST("tosell");
+$tobuy = GETPOST("tobuy");
+$fourn_id = GETPOST("fourn_id", 'int');
+$catid = GETPOST('catid', 'int');
+
+$sortfield = GETPOST("sortfield", 'alpha');
+$sortorder = GETPOST("sortorder", 'alpha');
+$page = GETPOST("page", 'int');
+if ($page == -1)
+{
+    $page = 0;
+}
+$offset = $conf->liste_limit * $page;
+$pageprev = $page - 1;
+$pagenext = $page + 1;
+if (!$sortfield)
+    $sortfield = "p.ref";
+if (!$sortorder)
+    $sortorder = "ASC";
+
+$limit = $conf->liste_limit;
+
+
+// Get object canvas (By default, this is not defined, so standard usage of dolibarr)
+$canvas = GETPOST("canvas");
+$objcanvas = '';
+if (!empty($canvas))
+{
+    require_once DOL_DOCUMENT_ROOT . '/core/class/canvas.class.php';
+    $objcanvas = new Canvas($db, $action);
+    $objcanvas->getCanvas('product', 'list', $canvas);
+}
+
+if ($user->login != "laboratorio")
+{
+// Security check
+    if ($type == '0')
+        $result = restrictedArea($user, 'produit', '', '', '', '', '', $objcanvas);
+    else if ($type == '1')
+        $result = restrictedArea($user, 'service', '', '', '', '', '', $objcanvas);
+    else
+        $result = restrictedArea($user, 'produit|service', '', '', '', '', '', $objcanvas);
+}
+/*
+ * Actions
+ */
+
+if (isset($_POST["button_removefilter_x"]))
+{
+    $sref = "";
+    $sbarcode = "";
+    $snom = "";
+    $search_categ = 0;
+}
+
+
+/*
+ * View
+ */
+
+$htmlother = new FormOther($db);
+$form = new Form($db);
+
+if (is_object($objcanvas) && $objcanvas->displayCanvasExists($action))
+{
+    $objcanvas->assign_values('list');       // This must contains code to load data (must call LoadListDatas($limit, $offset, $sortfield, $sortorder))
+    $objcanvas->display_canvas('list');    // This is code to show template
+} else
+{
+    $title = $langs->trans("ProductsAndServices");
+
+
+    $texte = "Elenco asset";
+    $texte = '<a href=' . DOL_URL_ROOT . '/product/elenco_asset.php>' . $texte . '</a>';
+
+    $sql = 'SELECT DISTINCT p.rowid, p.ref, p.label, p.barcode, p.price, p.price_ttc, p.price_base_type,';
+    $sql.= ' p.fk_product_type, p.tms as datem,';
+    $sql.= ' p.duration, p.tosell, p.tobuy, p.seuil_stock_alerte,';
+    $sql.= ' MIN(pfp.unitprice) as minsellprice';
+    $sql .= ', p.desiredstock';
+    $sql.= ' FROM ' . MAIN_DB_PREFIX . 'product as p';
+    if (!empty($search_categ) || !empty($catid))
+        $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . "categorie_product as cp ON p.rowid = cp.fk_product"; // We'll need this table joined to the select in order to filter by categ
+    $sql.= " LEFT JOIN " . MAIN_DB_PREFIX . "product_fournisseur_price as pfp ON p.rowid = pfp.fk_product";
+    // multilang
+    if ($conf->global->MAIN_MULTILANGS)
+    { // si l'option est active
+        $sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "product_lang as pl ON pl.fk_product = p.rowid AND pl.lang = '" . $langs->getDefaultLang() . "'";
+    }
+    $sql.= ' WHERE p.entity IN (' . getEntity('product', 1) . ')';
+    if ($sall)
+    {
+        // For natural search
+        $params = array('p.ref', 'p.label', 'p.description', 'p.note');
+        // multilang
+        if ($conf->global->MAIN_MULTILANGS)
+        { // si l'option est active
+            $params[] = 'pl.description';
+            $params[] = 'pl.note';
+        }
+        if (!empty($conf->barcode->enabled))
+        {
+            $params[] = 'p.barcode';
+        }
+        $sql .= natural_search($params, $sall);
+    }
+    // if the type is not 1, we show all products (type = 0,2,3)
+    if (dol_strlen($type))
+    {
+        if ($type == 1)
+            $sql.= " AND p.fk_product_type = '1'";
+        else
+            $sql.= " AND p.fk_product_type <> '1'";
+    }
+    if ($sref)
+        $sql .= natural_search('p.ref', $sref);
+    if ($sbarcode)
+        $sql .= natural_search('p.barcode', $sbarcode);
+    if ($snom)
+    {
+        $params = array('p.label');
+        // multilang
+        if ($conf->global->MAIN_MULTILANGS)
+        { // si l'option est active
+            $params[] = 'pl.label';
+        }
+        $sql .= natural_search($params, $snom);
+    }
+    if (isset($tosell) && dol_strlen($tosell) > 0 && $tosell != -1)
+        $sql.= " AND p.tosell = " . $db->escape($tosell);
+    if (isset($tobuy) && dol_strlen($tobuy) > 0 && $tobuy != -1)
+        $sql.= " AND p.tobuy = " . $db->escape($tobuy);
+    if (dol_strlen($canvas) > 0)
+        $sql.= " AND p.canvas = '" . $db->escape($canvas) . "'";
+    if ($catid > 0)
+        $sql.= " AND cp.fk_categorie = " . $catid;
+    if ($catid == -2)
+        $sql.= " AND cp.fk_categorie IS NULL";
+    if ($search_categ > 0)
+        $sql.= " AND cp.fk_categorie = " . $search_categ;
+    if ($search_categ == -2)
+        $sql.= " AND cp.fk_categorie IS NULL";
+    if ($fourn_id > 0)
+        $sql.= " AND pfp.fk_soc = " . $fourn_id;
+    $sql.= " GROUP BY p.rowid, p.ref, p.label, p.barcode, p.price, p.price_ttc, p.price_base_type,";
+    $sql.= " p.fk_product_type, p.tms,";
+    $sql.= " p.duration, p.tosell, p.tobuy, p.seuil_stock_alerte";
+    $sql .= ', p.desiredstock';
+    //if (GETPOST("toolowstock")) $sql.= " HAVING SUM(s.reel) < p.seuil_stock_alerte";    // Not used yet
+
+    $nbtotalofrecords = 0;
+    if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST))
+    {
+        $result = $db->query($sql);
+        $nbtotalofrecords = $db->num_rows($result);
+    }
+
+    $sql.= $db->order($sortfield, $sortorder);
+    $sql.= $db->plimit($limit + 1, $offset);
+
+    dol_syslog("product:list.php: sql=" . $sql);
+    $resql = $db->query($sql);
+    if ($resql)
+    {
+        $num = $db->num_rows($resql);
+
+        $i = 0;
+
+        if ($num == 1 && ($sall || $snom || $sref || $sbarcode) && $action != 'list')
+        {
+            $objp = $db->fetch_object($resql);
+            header("Location: fiche.php?id=" . $objp->rowid);
+            exit;
+        }
+
+        $helpurl = '';
+        if (isset($type))
+        {
+            if ($type == 0)
+            {
+                $helpurl = 'EN:Module_Products|FR:Module_Produits|ES:M&oacute;dulo_Productos';
+            } else if ($type == 1)
+            {
+                $helpurl = 'EN:Module_Services_En|FR:Module_Services|ES:M&oacute;dulo_Servicios';
+            }
+        }
+
+        llxHeader('', $title, $helpurl, '');
+
+
+        // mie modifiche
+        if (GETPOST('delprod'))
+            dol_htmloutput_mesg($langs->trans("ProductDeleted", GETPOST('delprod')));
+
+        $param = "&amp;sref=" . $sref . ($sbarcode ? "&amp;sbarcode=" . $sbarcode : "") . "&amp;snom=" . $snom . "&amp;sall=" . $sall . "&amp;tosell=" . $tosell . "&amp;tobuy=" . $tobuy;
+        $param.=($fourn_id ? "&amp;fourn_id=" . $fourn_id : "");
+        $param.=($search_categ ? "&amp;search_categ=" . $search_categ : "");
+        $param.=isset($type) ? "&amp;type=" . $type : "";
+
+        // print_barre_liste($texte, $page, "elenco_asset.php", $param, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
+        // print '<p> <strong> ultimi 5 asset </strong></p>';
+        if (!isset($_GET['ricerca'])) // se non sto facendo una ricerca mostra le ultime 10 asset
+        {
+            print '<table class="noborder" width="100%">';
+            print '<tr class="liste_titre"><td width="10%" colspan="4">' . "Codice asset" . '</td>';
+            print '<td align="right">' . "Codice produttore" . '</td>';
+
+            print '<td align="right">' . "Etichetta" . '</td>';
+            print '<td align="right">' . "Stato fisico" . '</td>';
+            print '<td align="right">' . "Stato tecnico" . '</td>';
+            print '<td align="right">' . "Magazzino" . '</td>';
+            print '<td align="right">' . "Data creazione" . '</td>';
+            print '<td align="right">' . "Data ultima modifica" . '</td>';
+            print '</tr>';
+
+            $sql = "SELECT * ";
+            $sql .= " FROM " . MAIN_DB_PREFIX . "asset as a";
+
+            $obj_mag_generico = new magazzino($db);
+            $user_login = $user->login;
+            if ($user_login == "laboratorio")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("Laboratorio");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            } else if ($user_login == "solari")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("solari");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            } else if ($user_login == "st_solari")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("st_solari");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            } else if ($user_login == "pcm_napoli")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("pcm_napoli");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            } else if ($user_login == "pcm_milano")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("pcm_milano");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            } else if ($user_login == "tpr")
+            {
+                $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("Tpr");
+                $id_m = $magazzino_proprio[0]['rowid'];
+                $sql .= " WHERE id_magazzino = " . $id_m;
+            }
+            $limit = "limit  10";
+            if ($user_login == "laboratorio")
+            {
+                $limit = "";
+            }
+            $sql .= " ORDER BY data_modifica DESC $limit";
+            $res = $db->query($sql);
+            while ($rec = $res->fetch_array(MYSQLI_ASSOC))
+            {
+                $asset = $rec['cod_asset'];
+                $link_asset = '<a href="' . DOL_URL_ROOT . '/product/scheda_asset.php?cod_asset=' . $asset . '">' . $asset . '</a></td>';
+                print '<tr ' . true . '>';
+                print '<td colspan="4">' . $link_asset . '</td>';
+                print '<td align="right">' . $rec['codice_produttore'] . '</td>';
+                print '<td align="right">' . $rec['label'] . '</td>';
+
+
+                $id_mag = (int) $rec['id_magazzino'];
+                //nome magazzino
+                $obj_asset = new magazzino($db);
+                $magazzino_nome = $obj_asset->getMagazzino($id_mag);
+                $magazzino_nome = $magazzino_nome[0]['label'];
+
+                $stato_fisico = "";
+                switch ($rec['stato_fisico'])
+                {
+                    case 1:
+                        $stato_fisico = "Giacenza";
+                        break;
+                    case 2:
+                        $stato_fisico = "In uso";
+                        break;
+                    case 3:
+                        $stato_fisico = "in Transito";
+                        break;
+                    case 4:
+                        $stato_fisico = "In lab";
+                        break;
+                    case 5:
+                        $stato_fisico = "Dismesso";
+                        break;
+                }
+                $stato_tecnico = "";
+                switch ($rec['stato_tecnico'])
+                {
+                    case 1:
+                        $stato_tecnico = "Nuovo";
+                        break;
+                    case 2:
+                        $stato_tecnico = "Ricondizionato";
+                        break;
+                    case 3:
+                        $stato_tecnico = "Guasto";
+                        break;
+                    case 4:
+                        $stato_tecnico = "Sconosciuto";
+                        break;
+                }
+
+                print '<td align="right">' . $stato_fisico . '</td>';
+                print '<td align="right">' . $stato_tecnico . '</td>';
+                print '<td align="right">' . $magazzino_nome . '</td>';
+                print '<td align="right">' . $rec['data_creazione'] . '</td>';
+
+
+                $date = date_create($rec['data_modifica']);
+                $data_db = $rec['data_modifica'];
+                $data_modifica = empty($data_db) ? "" : $data_db;
+                print '<td align="right">' . $data_modifica . '</td>';
+                print '</tr>';
+            }
+
+
+            print '<br>';
+            print '</table>';
+        }
+        print '<br>';
+
+
+
+        print '<form name="ricerca" action = "#">';
+
+        print '<table class="liste" width="100%">';
+        print '<tbody>';
+        print '<tr class="liste_titre">';
+        print '<td>';
+        print 'Ricerca asset';
+        print '</td>';
+        print '<td>';
+        print 'Ricerca per marca';
+        print '</td>';
+        print '<td>';
+        print 'Ricerca per etichetta';
+        print '</td>';
+        print '<td>';
+        print 'Ricerca per codice produttore';
+        print '</td>';
+        print '<td>';
+        print 'Effettua ricerca';
+        print '</td>';
+        print '</tr>';
+
+        print '<tr>';
+        print '<td class="liste_titre" align="left">
+<input class="flat" type="text" value="" size="20" name="ricasset">
+</td>';
+
+        print '<td class="liste_titre" align="left">
+<input class="flat" type="text" value="" size="12" name="ricmarca">
+</td>';
+
+        print '<td class="liste_titre" align="left">
+<input class="flat" type="text" value="" size="12" name="etichetta">
+</td>';
+
+        print '<td class="liste_titre" align="left">
+<input class="flat" type="text" value="" size="12" name="codice_produttore">
+</td>';
+
+        print '<td><input type="submit" class="button" name="ricerca"  value="' . "Cerca" . '"></td>';
+
+
+        print '</tbody>';
+        print '</table>';
+        print '</form>';
+
+        if (isset($_GET['ricerca']))
+        { // controllo se ha inserito il bottone ricerca
+            $pulsante_cerca = $_GET['ricerca'];
+            if ($pulsante_cerca == "Cerca")
+            { // se ha schiacciaot il pulsante
+                //controllo i 3 campi di ricerca
+                $ric_perAsset = isset($_GET['ricasset']) ? $_GET['ricasset'] : "";
+                $ric_perMarca = isset($_GET['ricmarca']) ? $_GET['ricmarca'] : "";
+                $ric_perEtichetta = isset($_GET['etichetta']) ? $_GET['etichetta'] : "";
+                $ric_perCodeProduttore = isset($_GET['codice_produttore']) ? $_GET['codice_produttore'] : "";
+
+                $ric_asset = "";
+                if (!empty($ric_perAsset))
+                {
+                    $posizione = strpos($ric_perAsset, "'");
+                    $apostrofo = $ric_perAsset[$posizione];
+                    if ($apostrofo === "'")
+                    {
+                        $ric_perAsset[$posizione] = "-";
+                    }
+                    //str_replace($ric_asset, $ric_perAsset, $pulsante_cerca);
+                    $ric_asset = "a.cod_asset LIKE '%" . $ric_perAsset . "%'";
+                }
+
+                $ric_Marca = "";
+                if (!empty($ric_perMarca))
+                {
+                    $ric_Marca = "a.brand LIKE '%" . $ric_perMarca . "%'";
+                }
+
+                $ric_Etichetta = "";
+                if (!empty($ric_perEtichetta))
+                {
+                    $ric_Etichetta = "a.label LIKE '%" . $ric_perEtichetta . "%'";
+                }
+
+                $ric_CodeProduttore = "";
+                if (!empty($ric_perCodeProduttore))
+                {
+                    $ric_CodeProduttore = "a.codice_produttore LIKE '%" . $ric_perCodeProduttore . "%'";
+                }
+
+                $ric_unico = $ric_asset . "," . $ric_Marca . "," . $ric_Etichetta . "," . $ric_CodeProduttore;
+                $ric_unico_array = explode(",", $ric_unico);
+                $merge = "";
+                for ($i = 0; $i < count($ric_unico_array); $i++)
+                {
+                    $cond = $ric_unico_array[$i];
+                    if (!empty($cond))
+                    {
+                        if (!empty($merge))
+                        {
+                            $merge .= " and " . $cond;
+                        } else
+                        {
+                            $merge .= $cond;
+                        }
+                    }
+                }
+
+                ricerca($merge, $db, $user);
+            }
+        }
+        print '<br>';
+        print '<a href=' . DOL_URL_ROOT . '/product/elenco_asset.php?action=avanzata>Ricerca avanzata</a>';
+        if ($action == "avanzata")
+        {
+
+            print '<form action="#" method="post">';
+            print '<input type="hidden" value="4ff7d777e23b951055513bee06a0ea39" name="token">';
+            print '<table class="noborder nohover" width="100%">';
+            print '<tbody>';
+            print '<tr class="liste_titre">';
+            print '<td colspan="3">Inserisci il testo per la ricerca avanzata</td>';
+            print '</tr>';
+
+            print '<tr class="impair">';
+
+            print '<td>Scaffale:</td>';
+            print '<td>';
+            print '<input class="flat" type="text" size="18" name="scaffale">';
+            print '</td>';
+            print '<td rowspan="8">';
+            print '<input class="button" type="submit" value="Ricerca">';
+            print '</td>';
+            print '</tr>';
+
+
+            print '<tr class="impair">';
+            print '<td>Corridoio:</td>';
+            print '<td>';
+            print '<input class="flat" type="text" size="18" name="corridoio">';
+            print '</td>';
+            print '</tr>';
+
+
+            print '<tr class="impair">';
+            print '<td>Ripiano:</td>';
+            print '<td>';
+            print '<input class="flat" type="text" size="18" name="ripiano">';
+            print '</td>';
+            print '</tr>';
+
+
+            print '<tr class="impair">';
+            print '<td>Modello:</td>';
+            print '<td>';
+            print '<input class="flat" type="text" size="18" name="modello">';
+            print '</td>';
+            print '</tr>';
+
+            print '<tr class="impair">';
+            print '<td>Stato fisico:</td>';
+            print '<td>';
+            $statutarray = array('1' => "Giacenza", '2' => "In uso", '3' => "In transito", '4' => "In lab", "5" => "Dismesso");
+            print $form->selectarray('stato_fisico', $statutarray, GETPOST('stato_fisico'));
+            print '</td>';
+            print '</tr>';
+
+            print '<tr class="impair">';
+            print '<td>Stato tecnico:</td>';
+            print '<td>';
+            $statutarray = array('1' => "Nuovo", '2' => "Ricondizionato", '3' => "Guasto", '4' => "Sconosciuto");
+            print $form->selectarray('stato_tecnico', $statutarray, GETPOST('stato_tecnico'));
+            print '</td>';
+            print '</tr>';
+
+            print '<tr class="impair">';
+            print '<td>Proprietario:</td>';
+            print '<td>';
+            print '<input class="flat" type="text" size="18" name="proprietario">';
+            print '</td>';
+            print '</tr>';
+
+            print '</tbody>';
+            print '</table>';
+            print '</form>';
+
+            $corridoio = $_POST['corridoio'];
+            $modello = $_POST['modello'];
+            $proprietario = $_POST['proprietario'];
+            $ripiano = $_POST['ripiano'];
+            $scaffale = $_POST['scaffale'];
+            $stato_fisico = $_POST['stato_fisico'];
+            $stato_tecnico = $_POST['stato_tecnico'];
+
+            //costruzione della query
+            $ric_corridoio = "";
+            if (!empty($corridoio))
+            {
+                $ric_corridoio = "a.corridoio LIKE '%" . $corridoio . "%'";
+            }
+
+            $ric_modello = "";
+            if (!empty($modello))
+            {
+                $ric_modello = "a.model LIKE '%" . $modello . "%'";
+            }
+
+            $ric_proprietario = "";
+            if (!empty($proprietario))
+            {
+                $ric_proprietario = "a.proprietario LIKE '%" . $proprietario . "%'";
+            }
+
+            $ric_ripiano = "";
+            if (!empty($ripiano))
+            {
+                $ric_ripiano = "a.ripiano LIKE '%" . $ripiano . "%'";
+            }
+
+            $ric_scaffale = "";
+            if (!empty($scaffale))
+            {
+                $ric_scaffale = "a.scaffali LIKE '%" . $scaffale . "%'";
+            }
+
+            $ric_stato_fisico = "";
+            if (!empty($stato_fisico))
+            {
+                $ric_stato_fisico = "a.stato_fisico LIKE '%" . $stato_fisico . "%'";
+            }
+
+            $ric_stato_tecnico = "";
+            if (!empty($stato_tecnico))
+            {
+                $ric_stato_tecnico = "a.stato_tecnico LIKE '%" . $stato_tecnico . "%'";
+            }
+
+            $ric_unico_avanzata = $ric_corridoio . "," . $ric_modello . "," . $ric_proprietario . "," . $ric_ripiano . "," . $ric_scaffale . "," . $ric_stato_fisico . "," . $ric_stato_tecnico;
+            $ric_unico_array = explode(",", $ric_unico_avanzata);
+            $merge = "";
+            for ($i = 0; $i < count($ric_unico_array); $i++)
+            {
+                $cond = $ric_unico_array[$i];
+                if (!empty($cond))
+                {
+
+                    if (!empty($merge))
+                    {
+                        $merge .= " and " . $cond;
+                    } else
+                    {
+                        $merge .= $cond;
+                    }
+                }
+            }
+
+            ricerca($merge, $db, $user);
+        }
+        //magazzini
+        if ($user->login != "laboratorio")
+        {
+
+           
+        print '<br><table class="noborder" width="100%">';
+
+        print '<tr class="liste_titre"><td width="40%" colspan="2">' . "Magazzino" . '</td>';
+        print '<td align="right">' . "Tot. asset in magazzino" . '</td>';
+        print '</tr>';
+
+        $sql = "SELECT magazzino.rowid, magazzino.label ";
+        $sql.= " FROM " . MAIN_DB_PREFIX . "entrepot as magazzino";
+        $sql.= " ORDER by rowid";
+        $res = $db->query($sql);
+        if ($res)
+        {
+            while ($rec = $db->fetch_array($res))
+            {
+                $id_mayMagazzino = $rec['rowid'];
+                $query .= " FROM " . MAIN_DB_PREFIX . "asset ";
+                $query .= " WHERE id_magazzino = " . $id_mayMagazzino;
+                $ris = $db->query($query);
+
+                $obj_asset = new magazzino($db);
+                $magazzino_nome = $obj_asset->getMagazzino($id_mayMagazzino);
+                $magazzino_nome = $magazzino_nome[0]['label'];
+
+                $down = DOL_URL_ROOT . '/product/view_asset_magazzino.php?id_magazzino=' . $id_mayMagazzino . "&codice_famiglia=" . $cod_famiglia;
+                $link = '<a href="' . $down . '">' . $magazzino_nome . '</a></td>';
+                $obj_asset = new asset($db);
+                $numero_asset = $obj_asset->getTotAssetFromMagazzino($id_mayMagazzino);
+
+                print '<td colspan="2">' . $link . '</td>';
+                print '<td align="right">' . $numero_asset . '</td>';
+
+
+                print '</tr>';
+            }
+        }
+
+
+        print '</table>';
+    }
+    }
+}
+
+/**
+ * metodo che prende come parametor i parametri di ricerca (merge) e il database
+ * e restituisce il risulato
+ * @param type $merge
+ * @param type $db
+ */
+function ricerca($merge, $db, $user)
+{
+    $user_login = $user->login;
+    $obj_mag_generico = new magazzino($db);
+    $sql = "SELECT * ";
+    $sql .= " FROM " . MAIN_DB_PREFIX . "asset as a";
+    if ($user_login != "laboratorio" && $user->login != "solari" && $user->login != "st_solari" && $user->login != "pcm_napoli" && $user->login != "pcm_milano")
+    {
+        $sql .= " WHERE " . $merge;
+    } else
+    {
+        if ($user_login == "laboratorio")
+        {
+            $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("Laboratorio");
+        }
+        if ($user_login == "solari")
+        {
+            $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("solari");
+        }
+        if ($user_login == "st_solari")
+        {
+            $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("st_solari");
+        }
+        if ($user_login == "pcm_napoli")
+        {
+            $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("pcm_napoli");
+        }
+        if ($user_login == "pcm_milano")
+        {
+            $magazzino_proprio = $obj_mag_generico->getMagazzinoUser("pcm_milano");
+        }
+        $id_m = $magazzino_proprio[0]['rowid'];
+        $cond = "";
+        if (!empty($merge))
+        {
+            $cond = " AND id_magazzino = " . $id_m;
+        }
+        $sql .= " WHERE " . $merge . $cond;
+    }
+    $res = $db->query($sql);
+    $assets = array();
+    if ($res)
+    {
+
+        $prods = array();
+        print '<br><table class="noborder" width="100%">';
+        print '<tr class="liste_titre"><td width="10%" colspan="4">' . "Codice asset" . '</td>';
+        print '<td align="right">' . "Etichetta" . '</td>';
+        print '<td align="right">' . "Stato fisico" . '</td>';
+        print '<td align="right">' . "Stato tecnico" . '</td>';
+        print '</tr>';
+        while ($rec = $db->fetch_array(MYSQLI_ASSOC))
+        {
+            $asset = $rec['cod_asset'];
+            $link_asset = '<a href="' . DOL_URL_ROOT . '/product/scheda_asset.php?cod_asset=' . $asset . '">' . $asset . '</a></td>';
+            print '<tr ' . true . '>';
+            print '<td colspan="4">' . $link_asset . '</td>';
+            print '<td align="right">' . $rec['label'] . '</td>';
+
+            $stato_fisico = "";
+            switch ($rec['stato_fisico'])
+            {
+                case 1:
+                    $stato_fisico = "Giacenza";
+                    break;
+                case 2:
+                    $stato_fisico = "In uso";
+                    break;
+                case 3:
+                    $stato_fisico = "in Transito";
+                    break;
+                case 4:
+                    $stato_fisico = "In lab";
+                    break;
+                case 5:
+                    $stato_fisico = "Dismesso";
+                    break;
+            }
+            $stato_tecnico = "";
+            switch ($rec['stato_tecnico'])
+            {
+                case 1:
+                    $stato_tecnico = "Nuovo";
+                    break;
+                case 2:
+                    $stato_tecnico = "Ricondizionato";
+                    break;
+                case 3:
+                    $stato_tecnico = "Guasto";
+                    break;
+                case 4:
+                    $stato_tecnico = "Sconosciuto";
+                    break;
+            }
+
+            print '<td align="right">' . $stato_fisico . '</td>';
+            print '<td align="right">' . $stato_tecnico . '</td>';
+            print '</tr>';
+        }
+
+
+        print '<br>';
+        print '</table>';
+    }
+}

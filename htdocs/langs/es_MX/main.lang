@@ -1,0 +1,6 @@
+# Dolibarr language file - es_MX - main 
+SeparatorDecimal=.
+SeparatorThousand=,
+AmountHT=Subtotal
+TotalHT=Subtotal
+TotalVAT=IVA

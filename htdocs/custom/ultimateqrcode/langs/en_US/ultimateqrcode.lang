@@ -1,0 +1,18 @@
+# Dolibarr language file - en_US - ultimateqrcode
+CHARSET=UTF-8
+Module300400Name=Ultimateqrcode
+Module300400Desc=QR codes management
+
+##### Module #####
+UltimateqrcodeSetup=UltimateQRcode module Setup
+UltimateqrcodeQrcode=QR codes
+QrcodeThirdParty=Third Party QR code 
+QrcodeProduct=Product QR code 
+QrcodeStock=Warehouse QR code 
+QrcodeInter=Intervention QR code 
+QrcodeOrder=Order QR code
+QrcodeMember=Member QR code
+QrcodeOrderUrl=Order Url
+YouCanProvide=You can fill data field ( url, email, free text...) :
+LikeThat=Like that
+UrlProductFile=URL of product file

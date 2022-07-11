@@ -1,0 +1,6 @@
+# Dolibarr language file - es_HN - companies
+VATIsUsed=Sujeto a ISV
+VATIsNotUsed=No sujeto a ISV
+VATIntra=RTN
+VATIntraShort=RTN
+VATIntraVeryShort=RTN
