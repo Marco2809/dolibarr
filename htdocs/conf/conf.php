@@ -5,11 +5,11 @@
 // Take a look at conf.php.example file for an example of conf.php file
 // and explanations for all possibles parameters.
 //
-$dolibarr_main_url_root='http://fastdata2.service-tech.org';
-$dolibarr_main_document_root='/var/www/fastdata2_ST_PROD/htdocs';
+$dolibarr_main_url_root='http://http://5.249.147.181:8081/';
+$dolibarr_main_document_root='/var/www/dolibarr/htdocs';
 $dolibarr_main_url_root_alt='/custom';
-$dolibarr_main_document_root_alt='/var/www/fastdata2_ST_PROD/htdocs/custom';
-$dolibarr_main_data_root='/var/www/fastdata2_ST_PROD/documents';
+$dolibarr_main_document_root_alt='/var/www/dolibarr/htdocs/custom';
+$dolibarr_main_data_root='/var/www/dolibarr/documents';
 $dolibarr_main_db_host='localhost';
 $dolibarr_main_db_port='';
 $dolibarr_main_db_name='dolibarr';
