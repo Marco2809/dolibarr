@@ -308,7 +308,7 @@ while ($obj_prod = mysqli_fetch_object($result))
     $string .= "<tr><td>". $first_line ."</td>";
     if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string .="<td>".date('d/m/Y',strtotime(substr($obj_prod->duedate,0,10)))."</td>";
     $string .= "<td>";
-    if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "<a target='_blank' style='text-decoration: none;' href='http://ticketglv.fast-data.it/scp/tickets.php?id=".$obj_prod->ticket_id."'>";
+    if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "<a target='_blank' style='text-decoration: none;' href='http://http://5.249.147.181:8080/scp/tickets.php?id=".$obj_prod->ticket_id."'>";
       $string .= $obj_prod->ref_num;
       if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "</a>";
       $string .= "</td><td>".$obj_prod->cr."</td><td>".$obj_prod->topic."</td><td>".$obj_prod->customer_middle_name."</td><td>".$obj_prod->customer_location_l_addr2.", ".$obj_prod->customer_location_l_addr3."</td><td>".$obj_prod->customer_location_l_addr7."</td><td>".$obj_prod->customer_location_l_addr1."</td><td><a href='tel:".$obj_prod->customer_phone_number."'>".$obj_prod->customer_phone_number."</a></td></tr>";
@@ -518,7 +518,7 @@ while ($obj_prod = mysqli_fetch_object($result))
     $string .= "<tr><td>". $first_line ."</td>";
     if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string .="<td>".date('d/m/Y',strtotime(substr($obj_prod->duedate,0,10)))."</td>";
     $string .= "<td>";
-    if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "<a target='_blank' style='text-decoration: none;' href='http://ticketglv.fast-data.it/scp/tickets.php?id=".$obj_prod->ticket_id."'>";
+    if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "<a target='_blank' style='text-decoration: none;' href='http://http://5.249.147.181:8080/scp/tickets.php?id=".$obj_prod->ticket_id."'>";
       $string .= $obj_prod->ref_num;
       if(isset($_SESSION['tipologia'])&&$_SESSION['tipologia']!="T") $string.= "</a>";
       $string .= "</td><td>".$obj_prod->cr."</td><td>".$obj_prod->topic."</td><td>".$obj_prod->customer_middle_name."</td><td>".$obj_prod->customer_location_l_addr2.", ".$obj_prod->customer_location_l_addr3."</td><td>".$obj_prod->customer_location_l_addr1."</td></tr>";

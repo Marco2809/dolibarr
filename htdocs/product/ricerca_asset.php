@@ -455,7 +455,7 @@ if (!isset($_GET['type']) || $_GET['type'] == "riepilogo")
                     $xls_testo .= '<td>' . $obj_asset->rif_bolla . '</td>';
                     $xls_testo .= '<td>' . date("d-m-Y", strtotime($obj_asset->data_spedizione)) . '</td>';
                     $xls_testo .= '<td>' . date("d-m-Y", strtotime($obj_asset->data_ricezione)) . '</td>';
-                    $xls_testo .= '<td><a target="_blank" style="text-decoration: none;" href="http://ticketglv.fast-data.it/scp/tickets.php?id='.$obj_tck->ticket_id.'">' . $obj_asset->numero_ticket . '</a></td>';
+                    $xls_testo .= '<td><a target="_blank" style="text-decoration: none;" href="http://http://5.249.147.181:8080/scp/tickets.php?id='.$obj_tck->ticket_id.'">' . $obj_asset->numero_ticket . '</a></td>';
                     $xls_testo .= '<td>' . $obj_asset->tipologia_intervento . '</td>';
                     $xls_testo .= '<td>' . $obj_asset->termid . '</td>';
                     $xls_testo .= '<td>' . $data_chiusura . '</td>';
@@ -589,7 +589,7 @@ if (!isset($_GET['type']) || $_GET['type'] == "riepilogo")
             //echo "NUMERO RISULTATI: ".mysqli_num_rows($result)."<br>";
             $obj_id=mysqli_fetch_object($result);
 
-            if(mysqli_num_rows($result)>0) { echo '<tr><td style="padding:5px;">'.$pt_number.'</td><td style="padding:5px;"><a target="_blank" style="text-decoration: none;" href="http://ticketglv.fast-data.it/scp/tickets.php?id='.$obj_id->ticket_id.'">'.$obj_id->ref_num.'</a></td><td>'.$mag.'</td><tr></tr>'; } //echo $pt_number.": PRESENTE<br>";
+            if(mysqli_num_rows($result)>0) { echo '<tr><td style="padding:5px;">'.$pt_number.'</td><td style="padding:5px;"><a target="_blank" style="text-decoration: none;" href="http://http://5.249.147.181:8080/scp/tickets.php?id='.$obj_id->ticket_id.'">'.$obj_id->ref_num.'</a></td><td>'.$mag.'</td><tr></tr>'; } //echo $pt_number.": PRESENTE<br>";
             else echo '<tr><td style="padding:5px;">'.$pt_number.'</td><td style="padding:5px;">Nessun Ticket Trovato</td><td>'.$mag.'</td></tr>';
 
         }
@@ -698,7 +698,7 @@ print '<br>';
         //echo $sql;
         while($obj_id=$db->fetch_object($result))
         {
-            echo '<tr><td style="padding:5px;"><a target="_blank" href="http://ticketglv.fast-data.it/scp/tickets.php?id='.$obj_id->ticket_id.'">'.$obj_id->ref_num.'</a></td></tr>';
+            echo '<tr><td style="padding:5px;"><a target="_blank" href="http://http://5.249.147.181:8080/scp/tickets.php?id='.$obj_id->ticket_id.'">'.$obj_id->ref_num.'</a></td></tr>';
         }
 
         echo '</table>';
