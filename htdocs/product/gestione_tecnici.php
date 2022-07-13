@@ -17,9 +17,9 @@ echo ini_get('display_errors');
 
 $host = "localhost";
 // username dell'utente in connessione
-$user = "root";
+$user = "admin";
 // password dell'utente
-$password = "servicetech14";
+$password = "Iniziale1!?";
 // nome del database
 $db = "fd_ticket";
 $db1 = "dolibarr";

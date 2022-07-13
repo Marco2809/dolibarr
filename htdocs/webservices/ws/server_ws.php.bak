@@ -13,7 +13,7 @@ private $con;
 
     static function connect()
     {
-        $con = mysql_connect('localhost', 'root', 'servicetech14');
+        $con = mysql_connect('localhost', 'admin', 'Iniziale1!?');
         // $con = mysql_connect('localhost', 'root', '');
         $db = mysql_select_db('dolibarr', $con);
 
